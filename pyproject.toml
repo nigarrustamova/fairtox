@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fairtox"
+version = "1.0.0"
+description = "Measuring and mitigating demographic bias in toxicity detection"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# `src` on the path means the suite runs from a clean checkout with no install
+# step -- which is what the CI smoke test and the one-command reproduction need.
+pythonpath = ["src", "scripts"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "scripts", "tests"]
+
+[tool.ruff.lint]
+# E501 (line length) is included deliberately: CI must fail on the same rules a
+# reader would notice, and a 140-character line in a two-column paper listing is
+# unreadable.
+select = ["E", "F", "I", "UP", "B", "W"]
+ignore = [
+    "B008",  # function call in default argument -- not a pattern we use
+    "E203",  # whitespace before ':' -- disagrees with the formatter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
