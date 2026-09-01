@@ -1,0 +1,40 @@
+# Datasets are large and licensed; they are downloaded, never committed.
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Model checkpoints (~260 MB each) and run outputs.
+experiments/
+results/
+*.pt
+*.ckpt
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# LaTeX build products (the PDFs themselves are committed)
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

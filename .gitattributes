@@ -1,0 +1,7 @@
+# Git stores every text file with LF endings whatever the machine committed
+# from. Without this a shell script committed from Windows reaches the Linux
+# training machine with CRLF endings and dies with "bad interpreter".
+* text=auto eol=lf
+
+*.png binary
+*.pt binary
