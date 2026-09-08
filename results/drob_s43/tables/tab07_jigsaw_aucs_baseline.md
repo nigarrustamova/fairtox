@@ -1,0 +1,26 @@
+| subgroup                            |    n |   n_nontoxic |   n_toxic |   subgroup_auc |   bpsn_auc |   bnsp_auc | reportable   |
+|:------------------------------------|-----:|-------------:|----------:|---------------:|-----------:|-----------:|:-------------|
+| female                              | 8765 |         7565 |      1200 |         0.9067 |     0.9194 |     0.9328 | True         |
+| male                                | 7296 |         6187 |      1109 |         0.9138 |     0.9099 |     0.9432 | True         |
+| christian                           | 6738 |         6130 |       608 |         0.9180 |     0.9363 |     0.9211 | True         |
+| white                               | 4146 |         2986 |      1160 |         0.8469 |     0.8161 |     0.9571 | True         |
+| muslim                              | 3480 |         2676 |       804 |         0.8618 |     0.8635 |     0.9415 | True         |
+| black                               | 2427 |         1669 |       758 |         0.8309 |     0.8060 |     0.9536 | True         |
+| homosexual_gay_or_lesbian           | 1759 |         1274 |       485 |         0.8412 |     0.8266 |     0.9484 | True         |
+| jewish                              | 1290 |         1091 |       199 |         0.8911 |     0.8963 |     0.9358 | True         |
+| psychiatric_or_mental_illness       |  785 |          643 |       142 |         0.9105 |     0.8889 |     0.9504 | True         |
+| asian                               |  750 |          647 |       103 |         0.8860 |     0.9236 |     0.9070 | True         |
+| transgender                         |  413 |          330 |        83 |         0.8387 |     0.8707 |     0.9258 | False        |
+| latino                              |  325 |          257 |        68 |         0.8866 |     0.9026 |     0.9290 | False        |
+| atheist                             |  258 |          216 |        42 |         0.9158 |     0.9182 |     0.9346 | False        |
+| heterosexual                        |  219 |          171 |        48 |         0.8455 |     0.8709 |     0.9239 | False        |
+| buddhist                            |  131 |          117 |        14 |         0.9383 |     0.9102 |     0.9464 | False        |
+| hindu                               |  111 |           99 |        12 |         0.9133 |     0.8916 |     0.9468 | False        |
+| other_race_or_ethnicity             |   74 |           60 |        14 |         0.9024 |     0.8642 |     0.9589 | False        |
+| other_religion                      |   45 |           40 |         5 |         0.9250 |     0.9205 |     0.9399 | False        |
+| bisexual                            |   40 |           35 |         5 |         0.9029 |     0.8707 |     0.9578 | False        |
+| physical_disability                 |   18 |           18 |         0 |       nan      |     0.9385 |   nan      | False        |
+| intellectual_or_learning_disability |   10 |           10 |         0 |       nan      |     0.9543 |   nan      | False        |
+| other_gender                        |    2 |            1 |         1 |         1.0000 |     0.9916 |     0.9327 | False        |
+| other_sexual_orientation            |    1 |            1 |         0 |       nan      |     0.9392 |   nan      | False        |
+| other_disability                    |    1 |            1 |         0 |       nan      |     0.9942 |   nan      | False        |

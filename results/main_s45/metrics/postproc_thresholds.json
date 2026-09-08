@@ -1,0 +1,604 @@
+{
+  "config_sha": "7ee3c60fde90",
+  "seed": 45,
+  "stage": "postproc_thresholds",
+  "global_threshold": 0.5,
+  "min_support": 100,
+  "policies": [
+    "equalize",
+    "cap"
+  ],
+  "comparison": [
+    {
+      "arm": "baseline",
+      "model": "baseline",
+      "policy": "global",
+      "n_thresholds_fitted": 0,
+      "fpr_gap": 0.11019099099099099,
+      "macro_fpr": 0.06088699867090928,
+      "eod_fpr": 0.08846872660747554,
+      "macro_f1": 0.8009804980743345,
+      "roc_auc": 0.9378686425991081,
+      "macro_fnr": 0.46640290936918366,
+      "global_fnr": 0.4119963249770311,
+      "safety_fnr": 0.46640290936918366,
+      "fnr_source": "subgroup",
+      "flag_rate": 0.09391369047619047,
+      "degenerate": false
+    },
+    {
+      "arm": "baseline + equalize",
+      "model": "baseline",
+      "policy": "equalize",
+      "n_thresholds_fitted": 14,
+      "fpr_gap": 0.039397934519885734,
+      "macro_fpr": 0.028482593916353553,
+      "eod_fpr": 0.020203608860411792,
+      "macro_f1": 0.7858913323225754,
+      "roc_auc": 0.9378686425991081,
+      "macro_fnr": 0.5833822693137947,
+      "global_fnr": 0.47578422365139783,
+      "safety_fnr": 0.5833822693137947,
+      "fnr_source": "subgroup",
+      "flag_rate": 0.08044642857142857,
+      "degenerate": false
+    },
+    {
+      "arm": "baseline + cap",
+      "model": "baseline",
+      "policy": "cap",
+      "n_thresholds_fitted": 14,
+      "fpr_gap": 0.03878817842232476,
+      "macro_fpr": 0.02671910344883685,
+      "eod_fpr": 0.020130936732572706,
+      "macro_f1": 0.7855796624546558,
+      "roc_auc": 0.9378686425991081,
+      "macro_fnr": 0.5885031790664897,
+      "global_fnr": 0.478540490878068,
+      "safety_fnr": 0.5885031790664897,
+      "fnr_source": "subgroup",
+      "flag_rate": 0.0796577380952381,
+      "degenerate": false
+    },
+    {
+      "arm": "mitigated",
+      "model": "mitigated",
+      "policy": "global",
+      "n_thresholds_fitted": 0,
+      "fpr_gap": 0.05599868160843771,
+      "macro_fpr": 0.03945953923065377,
+      "eod_fpr": 0.043396487094224265,
+      "macro_f1": 0.7904147953701968,
+      "roc_auc": 0.9336554342118739,
+      "macro_fnr": 0.5491141106993319,
+      "global_fnr": 0.45596534978343617,
+      "safety_fnr": 0.5491141106993319,
+      "fnr_source": "subgroup",
+      "flag_rate": 0.08483630952380952,
+      "degenerate": false
+    },
+    {
+      "arm": "mitigated + equalize",
+      "model": "mitigated",
+      "policy": "equalize",
+      "n_thresholds_fitted": 14,
+      "fpr_gap": 0.04122720281256866,
+      "macro_fpr": 0.02693790864385337,
+      "eod_fpr": 0.021512577057426638,
+      "macro_f1": 0.7795679674706357,
+      "roc_auc": 0.9336554342118739,
+      "macro_fnr": 0.6105881760201095,
+      "global_fnr": 0.4882530515815724,
+      "safety_fnr": 0.6105881760201095,
+      "fnr_source": "subgroup",
+      "flag_rate": 0.07949404761904762,
+      "degenerate": false
+    },
+    {
+      "arm": "mitigated + cap",
+      "model": "mitigated",
+      "policy": "cap",
+      "n_thresholds_fitted": 14,
+      "fpr_gap": 0.04122720281256866,
+      "macro_fpr": 0.025979765789230676,
+      "eod_fpr": 0.022368554634170902,
+      "macro_f1": 0.7788814880489623,
+      "roc_auc": 0.9336554342118739,
+      "macro_fnr": 0.6161070068250604,
+      "global_fnr": 0.49297808111300695,
+      "safety_fnr": 0.6161070068250604,
+      "fnr_source": "subgroup",
+      "flag_rate": 0.07819940476190476,
+      "degenerate": false
+    }
+  ],
+  "models": {
+    "baseline": {
+      "target_val_fpr": 0.02849949647532729,
+      "policies": {
+        "equalize": {
+          "thresholds": {
+            "male": 0.5888891220092773,
+            "female": 0.5279554128646851,
+            "transgender": 0.7429815530776978,
+            "heterosexual": 0.9692078232765198,
+            "homosexual_gay_or_lesbian": 0.7937461733818054,
+            "christian": 0.4374029040336609,
+            "jewish": 0.5344606637954712,
+            "muslim": 0.643105149269104,
+            "atheist": 0.8289388418197632,
+            "black": 0.6523521542549133,
+            "white": 0.7099249362945557,
+            "asian": 0.4072155356407165,
+            "latino": 0.7275885343551636,
+            "psychiatric_or_mental_illness": 0.7299049496650696
+          },
+          "n_fitted": 14,
+          "test_fpr_by_subgroup": {
+            "female": 0.03218717683557394,
+            "male": 0.028464541314248536,
+            "christian": 0.02167131833853226,
+            "white": 0.035386185777475335,
+            "muslim": 0.03656716417910448,
+            "black": 0.04390243902439024,
+            "homosexual_gay_or_lesbian": 0.0392,
+            "jewish": 0.027052238805970148,
+            "psychiatric_or_mental_illness": 0.026587887740029542,
+            "asian": 0.039755351681957186,
+            "transgender": 0.02830188679245283,
+            "latino": 0.028925619834710745,
+            "atheist": 0.0045045045045045045,
+            "heterosexual": 0.00625
+          },
+          "summary": {
+            "threshold": 0.5,
+            "min_support": 100,
+            "ci_method": "wilson",
+            "n_subgroups": 24,
+            "n_reportable_fpr": 14,
+            "n_reportable_fnr": 9,
+            "reportable_fpr_subgroups": [
+              "female",
+              "male",
+              "christian",
+              "white",
+              "muslim",
+              "black",
+              "homosexual_gay_or_lesbian",
+              "jewish",
+              "psychiatric_or_mental_illness",
+              "asian",
+              "transgender",
+              "latino",
+              "atheist",
+              "heterosexual"
+            ],
+            "reportable_fnr_subgroups": [
+              "female",
+              "male",
+              "christian",
+              "white",
+              "muslim",
+              "black",
+              "homosexual_gay_or_lesbian",
+              "jewish",
+              "psychiatric_or_mental_illness"
+            ],
+            "global": {
+              "n": 67200,
+              "n_nontoxic": 59581,
+              "n_toxic": 7619,
+              "tp": 3994,
+              "fp": 1412,
+              "tn": 58169,
+              "fn": 3625,
+              "fpr": 0.02369883016397845,
+              "fpr_ci_low": 0.02250781440805455,
+              "fpr_ci_high": 0.024951260577905192,
+              "fnr": 0.47578422365139783,
+              "fnr_ci_low": 0.46458528203487814,
+              "fnr_ci_high": 0.48700757189060706,
+              "precision": 0.7388087310395857,
+              "recall": 0.5242157763486022,
+              "f1": 0.6132821497120922
+            },
+            "fpr_gap": 0.039397934519885734,
+            "fpr_ratio": 9.746341463414634,
+            "eod_fpr": 0.020203608860411792,
+            "macro_fpr": 0.028482593916353553,
+            "fpr_variance": 0.00012342491676673042,
+            "worst_subgroup": {
+              "name": "black",
+              "fpr": 0.04390243902439024,
+              "ci": [
+                0.035007030862721666,
+                0.054929536941546286
+              ],
+              "n_nontoxic": 1640
+            },
+            "best_subgroup": {
+              "name": "atheist",
+              "fpr": 0.0045045045045045045,
+              "ci": [
+                0.0007955986955411765,
+                0.02506970899064378
+              ],
+              "n_nontoxic": 222
+            },
+            "fnr_gap": 0.15725193899432832,
+            "macro_fnr": 0.5833822693137947,
+            "worst_fnr_subgroup": {
+              "name": "jewish",
+              "fnr": 0.6634146341463415,
+              "n_toxic": 205
+            },
+            "degenerate": false
+          }
+        },
+        "cap": {
+          "thresholds": {
+            "male": 0.5888891220092773,
+            "female": 0.5279554128646851,
+            "transgender": 0.7429815530776978,
+            "heterosexual": 0.9692078232765198,
+            "homosexual_gay_or_lesbian": 0.7937461733818054,
+            "christian": 0.5,
+            "jewish": 0.5344606637954712,
+            "muslim": 0.643105149269104,
+            "atheist": 0.8289388418197632,
+            "black": 0.6523521542549133,
+            "white": 0.7099249362945557,
+            "asian": 0.5,
+            "latino": 0.7275885343551636,
+            "psychiatric_or_mental_illness": 0.7299049496650696
+          },
+          "n_fitted": 14,
+          "test_fpr_by_subgroup": {
+            "female": 0.03218717683557394,
+            "male": 0.02797657774886142,
+            "christian": 0.017566901986537514,
+            "white": 0.03470568220483158,
+            "muslim": 0.03507462686567164,
+            "black": 0.043292682926829265,
+            "homosexual_gay_or_lesbian": 0.0376,
+            "jewish": 0.025186567164179104,
+            "psychiatric_or_mental_illness": 0.026587887740029542,
+            "asian": 0.0290519877675841,
+            "transgender": 0.025157232704402517,
+            "latino": 0.028925619834710745,
+            "atheist": 0.0045045045045045045,
+            "heterosexual": 0.00625
+          },
+          "summary": {
+            "threshold": 0.5,
+            "min_support": 100,
+            "ci_method": "wilson",
+            "n_subgroups": 24,
+            "n_reportable_fpr": 14,
+            "n_reportable_fnr": 9,
+            "reportable_fpr_subgroups": [
+              "female",
+              "male",
+              "christian",
+              "white",
+              "muslim",
+              "black",
+              "homosexual_gay_or_lesbian",
+              "jewish",
+              "psychiatric_or_mental_illness",
+              "asian",
+              "transgender",
+              "latino",
+              "atheist",
+              "heterosexual"
+            ],
+            "reportable_fnr_subgroups": [
+              "female",
+              "male",
+              "christian",
+              "white",
+              "muslim",
+              "black",
+              "homosexual_gay_or_lesbian",
+              "jewish",
+              "psychiatric_or_mental_illness"
+            ],
+            "global": {
+              "n": 67200,
+              "n_nontoxic": 59581,
+              "n_toxic": 7619,
+              "tp": 3973,
+              "fp": 1380,
+              "tn": 58201,
+              "fn": 3646,
+              "fpr": 0.02316174619425656,
+              "fpr_ci_low": 0.021984346601866406,
+              "fpr_ci_high": 0.024400629696690927,
+              "fnr": 0.478540490878068,
+              "fnr_ci_low": 0.46733733259988297,
+              "fnr_ci_high": 0.4897652777893682,
+              "precision": 0.7422006351578554,
+              "recall": 0.5214595091219321,
+              "f1": 0.6125501079247611
+            },
+            "fpr_gap": 0.03878817842232476,
+            "fpr_ratio": 9.610975609756096,
+            "eod_fpr": 0.020130936732572706,
+            "macro_fpr": 0.02671910344883685,
+            "fpr_variance": 0.00011210789352576846,
+            "worst_subgroup": {
+              "name": "black",
+              "fpr": 0.043292682926829265,
+              "ci": [
+                0.0344640484284727,
+                0.054255857033287586
+              ],
+              "n_nontoxic": 1640
+            },
+            "best_subgroup": {
+              "name": "atheist",
+              "fpr": 0.0045045045045045045,
+              "ci": [
+                0.0007955986955411765,
+                0.02506970899064378
+              ],
+              "n_nontoxic": 222
+            },
+            "fnr_gap": 0.16130829508788103,
+            "macro_fnr": 0.5885031790664897,
+            "worst_fnr_subgroup": {
+              "name": "jewish",
+              "fnr": 0.6682926829268293,
+              "n_toxic": 205
+            },
+            "degenerate": false
+          }
+        }
+      }
+    },
+    "mitigated": {
+      "target_val_fpr": 0.024093655589123866,
+      "policies": {
+        "equalize": {
+          "thresholds": {
+            "male": 0.5062023997306824,
+            "female": 0.4101654887199402,
+            "transgender": 0.7097237706184387,
+            "heterosexual": 0.996008276939392,
+            "homosexual_gay_or_lesbian": 0.9278878569602966,
+            "christian": 0.3425715267658233,
+            "jewish": 0.5624769330024719,
+            "muslim": 0.7492707371711731,
+            "atheist": 0.957117795944214,
+            "black": 0.8390757441520691,
+            "white": 0.8340016603469849,
+            "asian": 0.511083722114563,
+            "latino": 0.6853179931640625,
+            "psychiatric_or_mental_illness": 0.8361535668373108
+          },
+          "n_fitted": 14,
+          "test_fpr_by_subgroup": {
+            "female": 0.027404343329886244,
+            "male": 0.025048796356538713,
+            "christian": 0.019865375143654572,
+            "white": 0.03878870364069412,
+            "muslim": 0.03544776119402985,
+            "black": 0.04573170731707317,
+            "homosexual_gay_or_lesbian": 0.032,
+            "jewish": 0.03264925373134328,
+            "psychiatric_or_mental_illness": 0.01772525849335303,
+            "asian": 0.022935779816513763,
+            "transgender": 0.03773584905660377,
+            "latino": 0.024793388429752067,
+            "atheist": 0.0045045045045045045,
+            "heterosexual": 0.0125
+          },
+          "summary": {
+            "threshold": 0.5,
+            "min_support": 100,
+            "ci_method": "wilson",
+            "n_subgroups": 24,
+            "n_reportable_fpr": 14,
+            "n_reportable_fnr": 9,
+            "reportable_fpr_subgroups": [
+              "female",
+              "male",
+              "christian",
+              "white",
+              "muslim",
+              "black",
+              "homosexual_gay_or_lesbian",
+              "jewish",
+              "psychiatric_or_mental_illness",
+              "asian",
+              "transgender",
+              "latino",
+              "atheist",
+              "heterosexual"
+            ],
+            "reportable_fnr_subgroups": [
+              "female",
+              "male",
+              "christian",
+              "white",
+              "muslim",
+              "black",
+              "homosexual_gay_or_lesbian",
+              "jewish",
+              "psychiatric_or_mental_illness"
+            ],
+            "global": {
+              "n": 67200,
+              "n_nontoxic": 59581,
+              "n_toxic": 7619,
+              "tp": 3899,
+              "fp": 1443,
+              "tn": 58138,
+              "fn": 3720,
+              "fpr": 0.024219130259646532,
+              "fpr_ci_low": 0.023015080659966557,
+              "fpr_ci_high": 0.02548452742941427,
+              "fnr": 0.4882530515815724,
+              "fnr_ci_low": 0.47703775794285064,
+              "fnr_ci_high": 0.49948018474728983,
+              "precision": 0.7298764507675028,
+              "recall": 0.5117469484184276,
+              "f1": 0.6016511071676568
+            },
+            "fpr_gap": 0.04122720281256866,
+            "fpr_ratio": 10.152439024390244,
+            "eod_fpr": 0.021512577057426638,
+            "macro_fpr": 0.02693790864385337,
+            "fpr_variance": 0.00011513659561859824,
+            "worst_subgroup": {
+              "name": "black",
+              "fpr": 0.04573170731707317,
+              "ci": [
+                0.0366390132550361,
+                0.05694754157675484
+              ],
+              "n_nontoxic": 1640
+            },
+            "best_subgroup": {
+              "name": "atheist",
+              "fpr": 0.0045045045045045045,
+              "ci": [
+                0.0007955986955411765,
+                0.02506970899064378
+              ],
+              "n_nontoxic": 222
+            },
+            "fnr_gap": 0.1422009339238831,
+            "macro_fnr": 0.6105881760201095,
+            "worst_fnr_subgroup": {
+              "name": "jewish",
+              "fnr": 0.6878048780487804,
+              "n_toxic": 205
+            },
+            "degenerate": false
+          }
+        },
+        "cap": {
+          "thresholds": {
+            "male": 0.5062023997306824,
+            "female": 0.5,
+            "transgender": 0.7097237706184387,
+            "heterosexual": 0.996008276939392,
+            "homosexual_gay_or_lesbian": 0.9278878569602966,
+            "christian": 0.5,
+            "jewish": 0.5624769330024719,
+            "muslim": 0.7492707371711731,
+            "atheist": 0.957117795944214,
+            "black": 0.8390757441520691,
+            "white": 0.8340016603469849,
+            "asian": 0.511083722114563,
+            "latino": 0.6853179931640625,
+            "psychiatric_or_mental_illness": 0.8361535668373108
+          },
+          "n_fitted": 14,
+          "test_fpr_by_subgroup": {
+            "female": 0.024301964839710446,
+            "male": 0.024398178269355888,
+            "christian": 0.015268428829420456,
+            "white": 0.03878870364069412,
+            "muslim": 0.034328358208955224,
+            "black": 0.04573170731707317,
+            "homosexual_gay_or_lesbian": 0.0312,
+            "jewish": 0.03264925373134328,
+            "psychiatric_or_mental_illness": 0.01772525849335303,
+            "asian": 0.022935779816513763,
+            "transgender": 0.03459119496855346,
+            "latino": 0.024793388429752067,
+            "atheist": 0.0045045045045045045,
+            "heterosexual": 0.0125
+          },
+          "summary": {
+            "threshold": 0.5,
+            "min_support": 100,
+            "ci_method": "wilson",
+            "n_subgroups": 24,
+            "n_reportable_fpr": 14,
+            "n_reportable_fnr": 9,
+            "reportable_fpr_subgroups": [
+              "female",
+              "male",
+              "christian",
+              "white",
+              "muslim",
+              "black",
+              "homosexual_gay_or_lesbian",
+              "jewish",
+              "psychiatric_or_mental_illness",
+              "asian",
+              "transgender",
+              "latino",
+              "atheist",
+              "heterosexual"
+            ],
+            "reportable_fnr_subgroups": [
+              "female",
+              "male",
+              "christian",
+              "white",
+              "muslim",
+              "black",
+              "homosexual_gay_or_lesbian",
+              "jewish",
+              "psychiatric_or_mental_illness"
+            ],
+            "global": {
+              "n": 67200,
+              "n_nontoxic": 59581,
+              "n_toxic": 7619,
+              "tp": 3863,
+              "fp": 1392,
+              "tn": 58189,
+              "fn": 3756,
+              "fpr": 0.023363152682902268,
+              "fpr_ci_low": 0.02218062741616006,
+              "fpr_ci_high": 0.02460713589017318,
+              "fnr": 0.49297808111300695,
+              "fnr_ci_low": 0.4817584161498903,
+              "fnr_ci_high": 0.5042048233352775,
+              "precision": 0.7351094196003806,
+              "recall": 0.507021918886993,
+              "f1": 0.600124281497592
+            },
+            "fpr_gap": 0.04122720281256866,
+            "fpr_ratio": 10.152439024390244,
+            "eod_fpr": 0.022368554634170902,
+            "macro_fpr": 0.025979765789230676,
+            "fpr_variance": 0.00011511050325877782,
+            "worst_subgroup": {
+              "name": "black",
+              "fpr": 0.04573170731707317,
+              "ci": [
+                0.0366390132550361,
+                0.05694754157675484
+              ],
+              "n_nontoxic": 1640
+            },
+            "best_subgroup": {
+              "name": "atheist",
+              "fpr": 0.0045045045045045045,
+              "ci": [
+                0.0007955986955411765,
+                0.02506970899064378
+              ],
+              "n_nontoxic": 222
+            },
+            "fnr_gap": 0.1336647506602454,
+            "macro_fnr": 0.6161070068250604,
+            "worst_fnr_subgroup": {
+              "name": "jewish",
+              "fnr": 0.6878048780487804,
+              "n_toxic": 205
+            },
+            "degenerate": false
+          }
+        }
+      }
+    }
+  },
+  "note": "Thresholds are fitted on the validation split and scored on test. The target is each model's own global validation FPR, so the policy preserves how much that model flags overall and the comparison is not a flag-rate comparison in disguise. Subgroups overlap, so a per-row rule cannot put every subgroup on the target at once; the per-row threshold is the mean over the groups a row belongs to and the residual is reported rather than tuned away. DEPLOYMENT: this method needs the identity annotation of a comment at INFERENCE time. Loss reweighting and counterfactual augmentation use identity annotations during training only. That difference is not visible in any metric here and has to be stated wherever these numbers are quoted."
+}

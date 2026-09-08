@@ -1,0 +1,154 @@
+{
+  "config_sha": "6a240af4da2f",
+  "seed": 42,
+  "stage": "seed_robustness",
+  "n_runs": 8,
+  "runs": [
+    "main",
+    "main_s43",
+    "main_s44",
+    "main_s45",
+    "main_s46",
+    "main_s47",
+    "main_s48",
+    "main_s49"
+  ],
+  "consistency": {
+    "n_runs": 8,
+    "verdicts": [
+      "C"
+    ],
+    "verdict_is_consistent": true,
+    "any_degenerate": false
+  },
+  "summary": {
+    "d_fpr_gap": {
+      "n": 8,
+      "mean": -0.05195980844182014,
+      "sd": 0.026607910924367904,
+      "min": -0.11140232114409049,
+      "max": -0.027852207021435454,
+      "n_negative": 8,
+      "sign_agreement": 1.0
+    },
+    "d_macro_fpr": {
+      "n": 8,
+      "mean": -0.032322045413590086,
+      "sd": 0.015231956806118664,
+      "min": -0.06319480014885126,
+      "max": -0.014888992121462954,
+      "n_negative": 8,
+      "sign_agreement": 1.0
+    },
+    "d_eod_fpr": {
+      "n": 8,
+      "mean": -0.05496162637581949,
+      "sd": 0.028699398549715146,
+      "min": -0.11600481770595938,
+      "max": -0.019710228170836903,
+      "n_negative": 8,
+      "sign_agreement": 1.0
+    },
+    "d_macro_f1": {
+      "n": 8,
+      "mean": -0.012821333792961673,
+      "sd": 0.0029462681382434086,
+      "min": -0.01675002801878611,
+      "max": -0.008833539092038434,
+      "n_negative": 8,
+      "sign_agreement": 1.0
+    },
+    "d_macro_fnr": {
+      "n": 8,
+      "mean": 0.11380381637119472,
+      "sd": 0.03751468718349717,
+      "min": 0.07505446388525255,
+      "max": 0.19382361150825678,
+      "n_negative": 0,
+      "sign_agreement": 1.0
+    }
+  },
+  "per_run": [
+    {
+      "run": "main",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.027852207021435454,
+      "d_macro_fpr": -0.014888992121462954,
+      "d_eod_fpr": -0.019710228170836903,
+      "d_macro_f1": -0.012939962195058219,
+      "d_macro_fnr": 0.0874418465869235
+    },
+    {
+      "run": "main_s43",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.11140232114409049,
+      "d_macro_fpr": -0.06319480014885126,
+      "d_eod_fpr": -0.11600481770595938,
+      "d_macro_f1": -0.01675002801878611,
+      "d_macro_fnr": 0.19382361150825678
+    },
+    {
+      "run": "main_s44",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.054008207080783716,
+      "d_macro_fpr": -0.039682764076796384,
+      "d_eod_fpr": -0.05529163941354387,
+      "d_macro_f1": -0.008833539092038434,
+      "d_macro_fnr": 0.11819589590844148
+    },
+    {
+      "run": "main_s45",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.054192309382553275,
+      "d_macro_fpr": -0.02142745944025551,
+      "d_eod_fpr": -0.045072239513251275,
+      "d_macro_f1": -0.010565702704137703,
+      "d_macro_fnr": 0.08271120133014825
+    },
+    {
+      "run": "main_s46",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.05496153460504133,
+      "d_macro_fpr": -0.03984398591134103,
+      "d_eod_fpr": -0.07040055103502223,
+      "d_macro_f1": -0.014563202967358357,
+      "d_macro_fnr": 0.1235854015849771
+    },
+    {
+      "run": "main_s47",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.034879037106509865,
+      "d_macro_fpr": -0.021740261878909803,
+      "d_eod_fpr": -0.03715278863062382,
+      "d_macro_f1": -0.009250597417044482,
+      "d_macro_fnr": 0.07505446388525255
+    },
+    {
+      "run": "main_s48",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.02906049780226303,
+      "d_macro_fpr": -0.027852743616179967,
+      "d_eod_fpr": -0.043175090590352086,
+      "d_macro_f1": -0.015302819344403362,
+      "d_macro_fnr": 0.12397659037816494
+    },
+    {
+      "run": "main_s49",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.04932235339188397,
+      "d_macro_fpr": -0.02994535611492375,
+      "d_eod_fpr": -0.05288565594696638,
+      "d_macro_f1": -0.014364818604866714,
+      "d_macro_fnr": 0.10564151978739311
+    }
+  ],
+  "note": "Each seed re-partitions the corpus and re-initialises the head, so the runs are independent replications. The unit of analysis is the per-seed paired difference. No significance test is reported: the number of seeds cannot support one."
+}

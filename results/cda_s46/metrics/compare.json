@@ -1,0 +1,241 @@
+{
+  "config_sha": "9120d7df35f0",
+  "seed": 46,
+  "stage": "compare",
+  "axes": {
+    "utility": {
+      "macro_f1": {
+        "baseline": 0.8056804200002454,
+        "mitigated": 0.8044822890116962,
+        "delta": -0.001198130988549262
+      },
+      "roc_auc": {
+        "baseline": 0.9396329518083474,
+        "mitigated": 0.9385794371319551,
+        "delta": -0.0010535146763922532
+      },
+      "pr_auc": {
+        "baseline": 0.7362490258854443,
+        "mitigated": 0.7345111213354615,
+        "delta": -0.0017379045499827939
+      }
+    },
+    "parity": {
+      "fpr_gap": {
+        "baseline": 0.12511284134506884,
+        "mitigated": 0.1657567927987998,
+        "delta": 0.04064395145373095
+      },
+      "macro_fpr": {
+        "baseline": 0.08152520957493319,
+        "mitigated": 0.07855156582737484,
+        "delta": -0.0029736437475583466
+      },
+      "fpr_variance": {
+        "baseline": 0.0015358752611623085,
+        "mitigated": 0.0018368483579082517,
+        "delta": 0.00030097309674594324
+      },
+      "eod_fpr": {
+        "baseline": 0.11257313972734996,
+        "mitigated": 0.16200484574420895,
+        "delta": 0.04943170601685899
+      }
+    },
+    "safety": {
+      "macro_fnr": {
+        "baseline": 0.41396959983700277,
+        "mitigated": 0.42757164728019015,
+        "delta": 0.013602047443187382
+      },
+      "fnr_gap": {
+        "baseline": 0.17073170731707316,
+        "mitigated": 0.1902439024390244,
+        "delta": 0.019512195121951237
+      },
+      "global_fnr": {
+        "baseline": 0.37734610841317756,
+        "mitigated": 0.38797742485890535,
+        "delta": 0.01063131644572779
+      }
+    }
+  },
+  "verdict": "D: null or adverse -- the weighting did not reduce the FPR gap",
+  "degenerate": false,
+  "split_fingerprint": "3a7fa90ef16c138c",
+  "training_fingerprint": "058596ef42df9608",
+  "baseline_summary": {
+    "threshold": 0.5,
+    "min_support": 100,
+    "ci_method": "wilson",
+    "n_subgroups": 23,
+    "n_reportable_fpr": 14,
+    "n_reportable_fnr": 9,
+    "reportable_fpr_subgroups": [
+      "female",
+      "male",
+      "christian",
+      "white",
+      "muslim",
+      "black",
+      "homosexual_gay_or_lesbian",
+      "jewish",
+      "psychiatric_or_mental_illness",
+      "asian",
+      "transgender",
+      "latino",
+      "atheist",
+      "heterosexual"
+    ],
+    "reportable_fnr_subgroups": [
+      "female",
+      "male",
+      "christian",
+      "white",
+      "muslim",
+      "black",
+      "homosexual_gay_or_lesbian",
+      "jewish",
+      "psychiatric_or_mental_illness"
+    ],
+    "global": {
+      "n": 67200,
+      "n_nontoxic": 59581,
+      "n_toxic": 7619,
+      "tp": 4744,
+      "fp": 2159,
+      "tn": 57422,
+      "fn": 2875,
+      "fpr": 0.03623638408217385,
+      "fpr_ci_low": 0.034765478734137566,
+      "fpr_ci_high": 0.03776708748587219,
+      "fnr": 0.37734610841317756,
+      "fnr_ci_low": 0.3665263891505682,
+      "fnr_ci_high": 0.38828944821184913,
+      "precision": 0.6872374330001448,
+      "recall": 0.6226538915868224,
+      "f1": 0.6533535325712712
+    },
+    "fpr_gap": 0.12511284134506884,
+    "fpr_ratio": 6.279761904761905,
+    "eod_fpr": 0.11257313972734996,
+    "macro_fpr": 0.08152520957493319,
+    "fpr_variance": 0.0015358752611623085,
+    "worst_subgroup": {
+      "name": "heterosexual",
+      "fpr": 0.1488095238095238,
+      "ci": [
+        0.10287185285884101,
+        0.21044868800594727
+      ],
+      "n_nontoxic": 168
+    },
+    "best_subgroup": {
+      "name": "atheist",
+      "fpr": 0.023696682464454975,
+      "ci": [
+        0.010163306452086473,
+        0.05426307985469313
+      ],
+      "n_nontoxic": 211
+    },
+    "fnr_gap": 0.17073170731707316,
+    "macro_fnr": 0.41396959983700277,
+    "worst_fnr_subgroup": {
+      "name": "jewish",
+      "fnr": 0.5121951219512195,
+      "n_toxic": 205
+    },
+    "degenerate": false,
+    "model": "baseline",
+    "split": "test",
+    "n_rows": 67200
+  },
+  "mitigated_summary": {
+    "threshold": 0.5,
+    "min_support": 100,
+    "ci_method": "wilson",
+    "n_subgroups": 23,
+    "n_reportable_fpr": 14,
+    "n_reportable_fnr": 9,
+    "reportable_fpr_subgroups": [
+      "female",
+      "male",
+      "christian",
+      "white",
+      "muslim",
+      "black",
+      "homosexual_gay_or_lesbian",
+      "jewish",
+      "psychiatric_or_mental_illness",
+      "asian",
+      "transgender",
+      "latino",
+      "atheist",
+      "heterosexual"
+    ],
+    "reportable_fnr_subgroups": [
+      "female",
+      "male",
+      "christian",
+      "white",
+      "muslim",
+      "black",
+      "homosexual_gay_or_lesbian",
+      "jewish",
+      "psychiatric_or_mental_illness"
+    ],
+    "global": {
+      "n": 67200,
+      "n_nontoxic": 59581,
+      "n_toxic": 7619,
+      "tp": 4663,
+      "fp": 2051,
+      "tn": 57530,
+      "fn": 2956,
+      "fpr": 0.034423725684362465,
+      "fpr_ci_low": 0.032989564162160465,
+      "fpr_ci_high": 0.03591791898786616,
+      "fnr": 0.38797742485890535,
+      "fnr_ci_low": 0.37709475775083956,
+      "fnr_ci_high": 0.39897299740038905,
+      "precision": 0.6945189156985404,
+      "recall": 0.6120225751410946,
+      "f1": 0.6506662945649899
+    },
+    "fpr_gap": 0.1657567927987998,
+    "fpr_ratio": 6.404211956521739,
+    "eod_fpr": 0.16200484574420895,
+    "macro_fpr": 0.07855156582737484,
+    "fpr_variance": 0.0018368483579082517,
+    "worst_subgroup": {
+      "name": "heterosexual",
+      "fpr": 0.19642857142857142,
+      "ci": [
+        0.1434267512473137,
+        0.26300286882224905
+      ],
+      "n_nontoxic": 168
+    },
+    "best_subgroup": {
+      "name": "christian",
+      "fpr": 0.030671778629771627,
+      "ci": [
+        0.026599904094761283,
+        0.03534433704029367
+      ],
+      "n_nontoxic": 5999
+    },
+    "fnr_gap": 0.1902439024390244,
+    "macro_fnr": 0.42757164728019015,
+    "worst_fnr_subgroup": {
+      "name": "jewish",
+      "fnr": 0.5317073170731708,
+      "n_toxic": 205
+    },
+    "degenerate": false,
+    "model": "mitigated",
+    "split": "test",
+    "n_rows": 67200
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "python": "3.12.3",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+  "config_sha": "a98ade20bb16",
+  "config_source": "a100_cda_full.yaml",
+  "seed": 45,
+  "torch": "2.13.0+cu126",
+  "transformers": "5.16.1",
+  "numpy": "2.5.2",
+  "pandas": "3.0.5",
+  "sklearn": "1.9.0",
+  "device": {
+    "device": "cuda",
+    "torch": "2.13.0+cu126",
+    "gpu_name": "NVIDIA A100-SXM4-40GB MIG 3g.20gb",
+    "gpu_total_memory_gb": 19.5,
+    "cuda": "12.6"
+  },
+  "git_commit": null
+}

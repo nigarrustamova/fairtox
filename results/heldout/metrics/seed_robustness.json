@@ -1,0 +1,100 @@
+{
+  "config_sha": "006a396d70f0",
+  "seed": 42,
+  "stage": "seed_robustness",
+  "n_runs": 3,
+  "runs": [
+    "heldout",
+    "heldout_s43",
+    "heldout_s44"
+  ],
+  "consistency": {
+    "n_runs": 3,
+    "verdicts": [
+      "C",
+      "D"
+    ],
+    "verdict_is_consistent": false,
+    "any_degenerate": false
+  },
+  "summary": {
+    "d_fpr_gap": {
+      "n": 3,
+      "mean": -0.013558695045272453,
+      "sd": 0.020924772385803675,
+      "min": -0.03699709838888235,
+      "max": 0.0032425373155764298,
+      "n_negative": 2,
+      "sign_agreement": 0.6666666666666666
+    },
+    "d_macro_fpr": {
+      "n": 3,
+      "mean": -0.027328675893564858,
+      "sd": 0.025728551761095005,
+      "min": -0.05421435158964481,
+      "max": -0.0029392080847900903,
+      "n_negative": 3,
+      "sign_agreement": 1.0
+    },
+    "d_eod_fpr": {
+      "n": 3,
+      "mean": -0.017888659750597242,
+      "sd": 0.029693442221296416,
+      "min": -0.049931090079233034,
+      "max": 0.008699603484272775,
+      "n_negative": 2,
+      "sign_agreement": 0.6666666666666666
+    },
+    "d_macro_f1": {
+      "n": 3,
+      "mean": -0.008586567303758211,
+      "sd": 0.003254872392552947,
+      "min": -0.012339758634709597,
+      "max": -0.006538622822246709,
+      "n_negative": 3,
+      "sign_agreement": 1.0
+    },
+    "d_macro_fnr": {
+      "n": 3,
+      "mean": 0.10271819894506155,
+      "sd": 0.06258048783629298,
+      "min": 0.0479648657622051,
+      "max": 0.17093445217560438,
+      "n_negative": 0,
+      "sign_agreement": 1.0
+    }
+  },
+  "per_run": [
+    {
+      "run": "heldout",
+      "verdict": "D",
+      "degenerate": false,
+      "d_fpr_gap": 0.0032425373155764298,
+      "d_macro_fpr": -0.0029392080847900903,
+      "d_eod_fpr": 0.008699603484272775,
+      "d_macro_f1": -0.006881320454318329,
+      "d_macro_fnr": 0.0479648657622051
+    },
+    {
+      "run": "heldout_s43",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.03699709838888235,
+      "d_macro_fpr": -0.05421435158964481,
+      "d_eod_fpr": -0.049931090079233034,
+      "d_macro_f1": -0.012339758634709597,
+      "d_macro_fnr": 0.17093445217560438
+    },
+    {
+      "run": "heldout_s44",
+      "verdict": "C",
+      "degenerate": false,
+      "d_fpr_gap": -0.006921524062511439,
+      "d_macro_fpr": -0.024832468006259663,
+      "d_eod_fpr": -0.01243449265683147,
+      "d_macro_f1": -0.006538622822246709,
+      "d_macro_fnr": 0.08925527889737517
+    }
+  ],
+  "note": "Each seed re-partitions the corpus and re-initialises the head, so the runs are independent replications. The unit of analysis is the per-seed paired difference. No significance test is reported: the number of seeds cannot support one."
+}

@@ -1,0 +1,11 @@
+axis,metric,baseline,mitigated,delta
+utility,macro_f1,0.8071,0.7934,-0.0137
+utility,roc_auc,0.9389,0.935,-0.0038
+utility,pr_auc,0.7367,0.7281,-0.0087
+parity,fpr_gap,0.1217,0.0537,-0.0679
+parity,macro_fpr,0.0762,0.0333,-0.0429
+parity,fpr_variance,0.0012,0.0002,-0.001
+parity,eod_fpr,0.1084,0.0417,-0.0667
+safety,macro_fnr,0.3949,0.5449,0.15
+safety,fnr_gap,0.1866,0.2726,0.086
+safety,global_fnr,0.3553,0.4505,0.0952
