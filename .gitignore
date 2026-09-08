@@ -1,0 +1,60 @@
+# Datasets are large and licensed; they are downloaded, never committed.
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Checkpoints are ~260 MB each and are never committed.
+experiments/
+*.pt
+*.ckpt
+
+# `results/` IS committed -- 33 MB of metrics, tables and figures for all 38 runs,
+# so the repository is self-contained: every number and every figure in the paper
+# can be read without re-running anything, and without a second archive to chase.
+#
+# Two things inside it stay out. Prediction files are ~5 MB per model per split
+# and are an intermediate, regenerable from the checkpoint. Synthetic smoke runs
+# are a pipeline check, never a finding -- the analysis code skips them by name,
+# and they are kept only as evidence the pipeline was exercised end to end.
+results/*/predictions/
+results/**/*.pt
+
+# Synthetic-data runs are a pipeline check and never a finding. They land in
+# `results/` like any other run, so without this line a smoke test followed by a
+# commit puts fabricated numbers in the repository next to real ones.
+results/smoke*/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# LaTeX build products (the PDFs themselves are committed)
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
