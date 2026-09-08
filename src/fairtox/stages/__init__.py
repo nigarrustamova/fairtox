@@ -12,20 +12,26 @@ both lines.
 
 from . import (
     _planned,
+    ablate,
     attributions,
     audit,
+    compare,
     eda,
     error_analysis,
+    mechanism,
     tfidf_baseline,
     train,
 )
 
 __all__ = [
     "_planned",
+    "ablate",
     "attributions",
     "audit",
+    "compare",
     "eda",
     "error_analysis",
+    "mechanism",
     "tfidf_baseline",
     "train",
 ]
