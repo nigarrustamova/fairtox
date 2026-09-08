@@ -1,0 +1,15 @@
+{
+  "python": "3.12.3",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "captured_utc": "2026-09-02T11:49:46+00:00",
+  "torch": "2.13.0+cu126",
+  "cuda_available": true,
+  "cuda": "12.6",
+  "gpus": [
+    {
+      "name": "NVIDIA A100-SXM4-40GB MIG 3g.20gb",
+      "total_memory_gb": 19.5
+    }
+  ]
+}

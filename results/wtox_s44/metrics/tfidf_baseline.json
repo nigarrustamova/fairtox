@@ -1,0 +1,59 @@
+{
+  "config_sha": "9b400e58c980",
+  "seed": 44,
+  "stage": "tfidf_baseline",
+  "model_name": "tfidf",
+  "model": "tfidf+logreg",
+  "n_features": 50000,
+  "split_fingerprint": "41cd4a89437acdbd",
+  "vectoriser": {
+    "max_features": 50000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "min_df": 2
+  },
+  "metrics": {
+    "val": {
+      "n": 44800,
+      "threshold": 0.5,
+      "positive_rate_true": 0.11339285714285714,
+      "positive_rate_pred": 0.19544642857142858,
+      "accuracy": 0.8695982142857143,
+      "precision": 0.45648698035632707,
+      "recall": 0.7868110236220472,
+      "f1": 0.5777681410812373,
+      "macro_f1": 0.7503301399139358,
+      "roc_auc": 0.915563169549048,
+      "pr_auc": 0.654419284447867,
+      "tn": 34961,
+      "fp": 4759,
+      "fn": 1083,
+      "tp": 3997,
+      "fpr": 0.11981369587109768,
+      "fnr": 0.21318897637795275,
+      "degenerate": false
+    },
+    "test": {
+      "n": 67200,
+      "threshold": 0.5,
+      "positive_rate_true": 0.1133779761904762,
+      "positive_rate_pred": 0.19388392857142858,
+      "accuracy": 0.8662797619047619,
+      "precision": 0.44754010284749407,
+      "recall": 0.7653235332720829,
+      "f1": 0.5648004649360713,
+      "macro_f1": 0.7429020258430972,
+      "roc_auc": 0.910103688192109,
+      "pr_auc": 0.6449266401811872,
+      "tn": 52383,
+      "fp": 7198,
+      "fn": 1788,
+      "tp": 5831,
+      "fpr": 0.1208103254393179,
+      "fnr": 0.23467646672791706,
+      "degenerate": false
+    }
+  }
+}

@@ -1,0 +1,6 @@
+| model     | error_type     |    n |   identity_bearing |   counter_speech |   negation |   self_identification |   quotation_or_report |   question |
+|:----------|:---------------|-----:|-------------------:|-----------------:|-----------:|----------------------:|----------------------:|-----------:|
+| baseline  | false_positive | 1721 |               1025 |              124 |        852 |                   426 |                   496 |        151 |
+| baseline  | false_negative | 3208 |               2154 |              301 |       1718 |                   950 |                  1117 |        295 |
+| mitigated | false_positive | 1829 |                982 |              115 |        865 |                   463 |                   503 |        139 |
+| mitigated | false_negative | 3312 |               2269 |              323 |       1793 |                   999 |                  1187 |        308 |

@@ -1,0 +1,35 @@
+id,error_type,label,prob,any_identity,comment_text,counter_speech,negation,self_identification,quotation_or_report,question
+856877,false_positive,0,0.9987,1,Liberalism is a mental disorder.,0,0,0,0,0
+6287105,false_positive,0,0.9985,1,"Its all calculated of course, he well knows that this will be popular, but to call for someone's death is not a Christian act . I dont remember Jesus calling for a more speedy  justice system when somebody strikes your c",0,1,0,0,0
+865101,false_positive,0,0.9985,1,"Many servers treat women like crap if they are with other women or children.  
+
+They should rethink it.",0,0,0,0,0
+6192629,false_positive,0,0.9983,1,Justin in my world my Canada it matters (I’m female 67 yrs. young) it really matters.   Show you damn face or go home wherever that is.  PERIOD.,0,0,1,0,0
+1081020,false_positive,0,0.9981,1,Naaasty Women!,0,0,0,0,0
+5148997,false_positive,0,0.9979,1,"There is an unholy alliance of white racists, Hindu extremists and Jewish extremists that are fueling all this anti-Muslim hatred. These haters are all losers in life and have found Muslims as a scapegoat for their own p",0,0,1,0,0
+993904,false_positive,0,0.9978,1,"Really...So let's have Hindu prayers on Tuesdays and Thursdays, Jewish , Sikhs etc etc... Enough of this political crap. If they are so bothered of giving preference to prayers over attendance, please go to religious sch",0,0,0,0,0
+5326636,false_positive,0,0.9973,1,Man you are tiresome.,0,0,0,0,0
+5944625,false_positive,0,0.9969,1,It's a safe bet that the criteria would include how we treated each other which would leave a lot of the so-called 'Christians' in this country pretty screwed.,0,0,0,0,0
+5323208,false_positive,0,0.9967,1,"Your president, not mine. Trump was cheered on by the Ku Klux Klan, David Duke praised him, and ran for office because Trump ran for president, and the White Nationalists endorsed Trump. Get a clue. Which one of these fo",0,1,0,0,0
+6188368,false_positive,0,0.9965,1,"Loved the hypocrisy of Kelly recalling the time when “women were sacred and looked upon with great honor"" while defending Trump, who brags about grabbing women by the p***y.",0,0,0,1,0
+7184599,false_positive,0,0.9958,1,More evidence that liberalism is a mental disorder.,0,0,0,0,0
+253812,false_positive,0,0.9958,1,Our city celebrates slugs and trans.,0,0,1,0,0
+6290418,false_positive,0,0.9955,1,"I am white and a lawyer, and I never made it on Bay Street. I am not crying about it. Suck it up, we all can't be winners.",0,1,1,0,0
+357570,false_positive,0,0.9954,1,"Paranoia, Hitler had the same mental illness.",0,0,0,0,0
+408022,false_negative,1,0.0001,1,"I live in Bend, and many people were upset when 10 Barrel sold to AB. Two years later, they are still brewing right down the street from my house, employing locals. I had a Sinister Black just last night - just as delici",0,0,1,0,0
+5172081,false_negative,1,0.0001,1,The perp looks Asian with a surname Henderson,0,0,0,0,0
+5966776,false_negative,1,0.0001,1,"I would encourage everyone to not get drawn into TomQuinn's fight, which is certainly not a Christian struggle for discerning truth or faith.  There are other people and places who have a sincere wish for dialogue - but ",1,1,1,0,0
+5182016,false_negative,1,0.0001,1,"When the job has to be done right, bring out the men.",0,0,0,0,0
+5772790,false_negative,1,0.0001,1,"Remember your history!
+Slavery was brought to the Americas by white Europeans, the English, Dutch, French, Spanish and Portuguese.",0,0,0,0,0
+6213462,false_negative,1,0.0002,1,"Until you or someone you know is in this horrific situation, you are dismissive about the plight of women, and yes men, and their children who become homeless after leaving abusive relationships. Thank you Denby.",0,0,0,0,0
+5486644,false_negative,1,0.0002,1,The analogy in your comment sounds suspiciously Chinese to me.,0,0,0,0,0
+5836948,false_negative,1,0.0003,1,"I hope the court is easy on this guy.  He probably saved the bengal cub's life.  If a Chinese tourist bought the cub, it would be shipped back to China in pieces.",0,0,0,0,0
+791287,false_negative,1,0.0003,1,"Mercy isn't so much the first virtue one identifies with Roman Catholicism. Historically, the RCC in effect unmercifully enslaves people-thinking to its institutional legalisms.
+'Roma Aeterna' is as corrupted and corrupt",0,1,0,0,0
+6235034,false_negative,1,0.0004,1,"Get home to your laundry and your cooking, woman!",0,0,0,0,0
+5477474,false_negative,1,0.0004,1,don't be fooled by the so called moderate peaceful Muslims as they were marching in Al-Quds parades around the world.,0,1,0,0,0
+533495,false_negative,1,0.0004,1,"Why should anyone accept your assessment of what's happening in the Episcopal Church USA?   It's remarkably inaccurate.  The Roman Catholic church has by no means avoided ""that disaster!""",0,0,0,1,0
+512617,false_negative,1,0.0004,1,"Can you please cite some examples of Hillary ""viciously"" attacking any of these women?",0,0,0,1,1
+743138,false_negative,1,0.0006,1,The era of women's liberation is over. It's been replaced by an era of anxious handwringing and pious judgements.,0,0,0,0,0
+5478825,false_negative,1,0.0006,1,"I hear this comment a lot, Dromig.  You yourself have been sent away from each Confession with the same statement. Have you ever complied? Or have you sinned again? Like me, were you trying your best, improving even, but",0,1,1,0,0

@@ -1,0 +1,294 @@
+{
+  "config_sha": "cb9b1dbd869b",
+  "seed": 42,
+  "stage": "eda",
+  "n_total": 447998,
+  "split_sizes": {
+    "train": 335998,
+    "val": 44800,
+    "test": 67200
+  },
+  "split_fingerprint": "798dd7cc3c01ef5a",
+  "toxic_rate": 0.11337997044629664,
+  "n_toxic": 50794,
+  "n_nontoxic": 397204,
+  "any_identity_rate": 0.4188924950557815,
+  "toxicity_threshold": 0.5,
+  "identity_threshold": 0.5,
+  "annotated_only": true,
+  "subsample": null,
+  "min_support": 100,
+  "support_counted_on": "test split",
+  "n_subgroups_total": 24,
+  "n_reportable_fpr": 14,
+  "n_reportable_fnr": 9,
+  "reportable_fpr_subgroups": [
+    "female",
+    "male",
+    "christian",
+    "white",
+    "muslim",
+    "black",
+    "homosexual_gay_or_lesbian",
+    "jewish",
+    "psychiatric_or_mental_illness",
+    "asian",
+    "transgender",
+    "latino",
+    "atheist",
+    "heterosexual"
+  ],
+  "reportable_fnr_subgroups": [
+    "female",
+    "male",
+    "christian",
+    "white",
+    "muslim",
+    "black",
+    "homosexual_gay_or_lesbian",
+    "jewish",
+    "psychiatric_or_mental_illness"
+  ],
+  "subgroups": [
+    {
+      "subgroup": "female",
+      "n": 58584,
+      "n_toxic": 8003,
+      "n_nontoxic": 50581,
+      "toxic_rate": 0.1366,
+      "test_n": 8794,
+      "test_n_nontoxic": 7620,
+      "test_n_toxic": 1174
+    },
+    {
+      "subgroup": "male",
+      "n": 48870,
+      "n_toxic": 7355,
+      "n_nontoxic": 41515,
+      "toxic_rate": 0.1505,
+      "test_n": 7346,
+      "test_n_nontoxic": 6224,
+      "test_n_toxic": 1122
+    },
+    {
+      "subgroup": "christian",
+      "n": 44649,
+      "n_toxic": 4090,
+      "n_nontoxic": 40559,
+      "toxic_rate": 0.0916,
+      "test_n": 6689,
+      "test_n_nontoxic": 6023,
+      "test_n_toxic": 666
+    },
+    {
+      "subgroup": "white",
+      "n": 27534,
+      "n_toxic": 7780,
+      "n_nontoxic": 19754,
+      "toxic_rate": 0.2826,
+      "test_n": 4218,
+      "test_n_nontoxic": 3024,
+      "test_n_toxic": 1194
+    },
+    {
+      "subgroup": "muslim",
+      "n": 23046,
+      "n_toxic": 5264,
+      "n_nontoxic": 17782,
+      "toxic_rate": 0.2284,
+      "test_n": 3471,
+      "test_n_nontoxic": 2651,
+      "test_n_toxic": 820
+    },
+    {
+      "subgroup": "black",
+      "n": 16420,
+      "n_toxic": 5181,
+      "n_nontoxic": 11239,
+      "toxic_rate": 0.3155,
+      "test_n": 2472,
+      "test_n_nontoxic": 1657,
+      "test_n_toxic": 815
+    },
+    {
+      "subgroup": "homosexual_gay_or_lesbian",
+      "n": 12062,
+      "n_toxic": 3411,
+      "n_nontoxic": 8651,
+      "toxic_rate": 0.2828,
+      "test_n": 1818,
+      "test_n_nontoxic": 1319,
+      "test_n_toxic": 499
+    },
+    {
+      "subgroup": "jewish",
+      "n": 8486,
+      "n_toxic": 1378,
+      "n_nontoxic": 7108,
+      "toxic_rate": 0.1624,
+      "test_n": 1334,
+      "test_n_nontoxic": 1124,
+      "test_n_toxic": 210
+    },
+    {
+      "subgroup": "psychiatric_or_mental_illness",
+      "n": 5400,
+      "n_toxic": 1136,
+      "n_nontoxic": 4264,
+      "toxic_rate": 0.2104,
+      "test_n": 838,
+      "test_n_nontoxic": 690,
+      "test_n_toxic": 148
+    },
+    {
+      "subgroup": "asian",
+      "n": 5032,
+      "n_toxic": 612,
+      "n_nontoxic": 4420,
+      "toxic_rate": 0.1216,
+      "test_n": 780,
+      "test_n_nontoxic": 686,
+      "test_n_toxic": 94
+    },
+    {
+      "subgroup": "transgender",
+      "n": 2759,
+      "n_toxic": 583,
+      "n_nontoxic": 2176,
+      "toxic_rate": 0.2113,
+      "test_n": 412,
+      "test_n_nontoxic": 327,
+      "test_n_toxic": 85
+    },
+    {
+      "subgroup": "latino",
+      "n": 2229,
+      "n_toxic": 439,
+      "n_nontoxic": 1790,
+      "toxic_rate": 0.1969,
+      "test_n": 355,
+      "test_n_nontoxic": 276,
+      "test_n_toxic": 79
+    },
+    {
+      "subgroup": "atheist",
+      "n": 1692,
+      "n_toxic": 206,
+      "n_nontoxic": 1486,
+      "toxic_rate": 0.1217,
+      "test_n": 217,
+      "test_n_nontoxic": 195,
+      "test_n_toxic": 22
+    },
+    {
+      "subgroup": "heterosexual",
+      "n": 1432,
+      "n_toxic": 323,
+      "n_nontoxic": 1109,
+      "toxic_rate": 0.2256,
+      "test_n": 186,
+      "test_n_nontoxic": 151,
+      "test_n_toxic": 35
+    },
+    {
+      "subgroup": "buddhist",
+      "n": 641,
+      "n_toxic": 76,
+      "n_nontoxic": 565,
+      "toxic_rate": 0.1186,
+      "test_n": 94,
+      "test_n_nontoxic": 80,
+      "test_n_toxic": 14
+    },
+    {
+      "subgroup": "hindu",
+      "n": 631,
+      "n_toxic": 66,
+      "n_nontoxic": 565,
+      "toxic_rate": 0.1046,
+      "test_n": 81,
+      "test_n_nontoxic": 71,
+      "test_n_toxic": 10
+    },
+    {
+      "subgroup": "other_race_or_ethnicity",
+      "n": 549,
+      "n_toxic": 102,
+      "n_nontoxic": 447,
+      "toxic_rate": 0.1858,
+      "test_n": 89,
+      "test_n_nontoxic": 71,
+      "test_n_toxic": 18
+    },
+    {
+      "subgroup": "other_religion",
+      "n": 354,
+      "n_toxic": 48,
+      "n_nontoxic": 306,
+      "toxic_rate": 0.1356,
+      "test_n": 45,
+      "test_n_nontoxic": 42,
+      "test_n_toxic": 3
+    },
+    {
+      "subgroup": "bisexual",
+      "n": 321,
+      "n_toxic": 69,
+      "n_nontoxic": 252,
+      "toxic_rate": 0.215,
+      "test_n": 45,
+      "test_n_nontoxic": 35,
+      "test_n_toxic": 10
+    },
+    {
+      "subgroup": "intellectual_or_learning_disability",
+      "n": 117,
+      "n_toxic": 7,
+      "n_nontoxic": 110,
+      "toxic_rate": 0.0598,
+      "test_n": 14,
+      "test_n_nontoxic": 13,
+      "test_n_toxic": 1
+    },
+    {
+      "subgroup": "physical_disability",
+      "n": 91,
+      "n_toxic": 7,
+      "n_nontoxic": 84,
+      "toxic_rate": 0.0769,
+      "test_n": 15,
+      "test_n_nontoxic": 14,
+      "test_n_toxic": 1
+    },
+    {
+      "subgroup": "other_sexual_orientation",
+      "n": 11,
+      "n_toxic": 3,
+      "n_nontoxic": 8,
+      "toxic_rate": 0.2727,
+      "test_n": 1,
+      "test_n_nontoxic": 0,
+      "test_n_toxic": 1
+    },
+    {
+      "subgroup": "other_gender",
+      "n": 10,
+      "n_toxic": 3,
+      "n_nontoxic": 7,
+      "toxic_rate": 0.3,
+      "test_n": 2,
+      "test_n_nontoxic": 1,
+      "test_n_toxic": 1
+    },
+    {
+      "subgroup": "other_disability",
+      "n": 5,
+      "n_toxic": 1,
+      "n_nontoxic": 4,
+      "toxic_rate": 0.2,
+      "test_n": 0,
+      "test_n_nontoxic": 0,
+      "test_n_toxic": 0
+    }
+  ]
+}

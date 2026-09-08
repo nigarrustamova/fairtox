@@ -1,0 +1,117 @@
+{
+  "config_sha": "57f4ecc923e4",
+  "seed": 42,
+  "stage": "error_analysis",
+  "threshold": 0.5,
+  "categories": [
+    "counter_speech",
+    "negation",
+    "self_identification",
+    "quotation_or_report",
+    "question"
+  ],
+  "counts": [
+    {
+      "model": "baseline",
+      "error_type": "false_positive",
+      "n": 1721,
+      "identity_bearing": 1025,
+      "counter_speech": 124,
+      "negation": 852,
+      "self_identification": 426,
+      "quotation_or_report": 496,
+      "question": 151
+    },
+    {
+      "model": "baseline",
+      "error_type": "false_negative",
+      "n": 3208,
+      "identity_bearing": 2154,
+      "counter_speech": 301,
+      "negation": 1718,
+      "self_identification": 950,
+      "quotation_or_report": 1117,
+      "question": 295
+    },
+    {
+      "model": "mitigated",
+      "error_type": "false_positive",
+      "n": 1525,
+      "identity_bearing": 705,
+      "counter_speech": 88,
+      "negation": 699,
+      "self_identification": 371,
+      "quotation_or_report": 389,
+      "question": 115
+    },
+    {
+      "model": "mitigated",
+      "error_type": "false_negative",
+      "n": 3543,
+      "identity_bearing": 2505,
+      "counter_speech": 353,
+      "negation": 1931,
+      "self_identification": 1068,
+      "quotation_or_report": 1271,
+      "question": 326
+    }
+  ],
+  "manual_coding": [
+    {
+      "manual_category": "hostility_not_group_directed",
+      "n": 21,
+      "share": 0.35,
+      "label_arguable": 11,
+      "regex_counter_speech": 1,
+      "regex_negation": 13,
+      "regex_self_identification": 8,
+      "regex_quotation_or_report": 8,
+      "regex_question": 3
+    },
+    {
+      "manual_category": "group_directed_derogation",
+      "n": 16,
+      "share": 0.2667,
+      "label_arguable": 16,
+      "regex_counter_speech": 0,
+      "regex_negation": 9,
+      "regex_self_identification": 2,
+      "regex_quotation_or_report": 4,
+      "regex_question": 0
+    },
+    {
+      "manual_category": "counter_speech",
+      "n": 12,
+      "share": 0.2,
+      "label_arguable": 0,
+      "regex_counter_speech": 3,
+      "regex_negation": 4,
+      "regex_self_identification": 3,
+      "regex_quotation_or_report": 3,
+      "regex_question": 0
+    },
+    {
+      "manual_category": "identity_topic_neutral",
+      "n": 7,
+      "share": 0.1167,
+      "label_arguable": 0,
+      "regex_counter_speech": 1,
+      "regex_negation": 2,
+      "regex_self_identification": 0,
+      "regex_quotation_or_report": 0,
+      "regex_question": 0
+    },
+    {
+      "manual_category": "quoted_hostility",
+      "n": 4,
+      "share": 0.0667,
+      "label_arguable": 0,
+      "regex_counter_speech": 0,
+      "regex_negation": 3,
+      "regex_self_identification": 2,
+      "regex_quotation_or_report": 4,
+      "regex_question": 1
+    }
+  ],
+  "note": "The regex columns are a heuristic pre-sort and are reported as such. Any category count the paper states as a finding comes from the manually coded sample in tab13, which is drawn at random rather than from the confident tail; where that file is absent, only the heuristic counts exist and the paper must say so."
+}

@@ -1,0 +1,5 @@
+model,error_type,n,identity_bearing,counter_speech,negation,self_identification,quotation_or_report,question
+baseline,false_positive,2839,1831,209,1424,701,885,292
+baseline,false_negative,2487,1610,258,1376,791,877,223
+mitigated,false_positive,1540,710,85,694,354,416,137
+mitigated,false_negative,3489,2471,347,1930,1043,1194,312

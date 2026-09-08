@@ -1,0 +1,60 @@
+{
+  "config_sha": "cadccd98225e",
+  "seed": 42,
+  "stage": "error_analysis",
+  "threshold": 0.5,
+  "categories": [
+    "counter_speech",
+    "negation",
+    "self_identification",
+    "quotation_or_report",
+    "question"
+  ],
+  "counts": [
+    {
+      "model": "baseline",
+      "error_type": "false_positive",
+      "n": 2057,
+      "identity_bearing": 1251,
+      "counter_speech": 150,
+      "negation": 986,
+      "self_identification": 520,
+      "quotation_or_report": 628,
+      "question": 194
+    },
+    {
+      "model": "baseline",
+      "error_type": "false_negative",
+      "n": 2885,
+      "identity_bearing": 1918,
+      "counter_speech": 269,
+      "negation": 1596,
+      "self_identification": 893,
+      "quotation_or_report": 1037,
+      "question": 249
+    },
+    {
+      "model": "mitigated",
+      "error_type": "false_positive",
+      "n": 1492,
+      "identity_bearing": 641,
+      "counter_speech": 83,
+      "negation": 649,
+      "self_identification": 345,
+      "quotation_or_report": 403,
+      "question": 127
+    },
+    {
+      "model": "mitigated",
+      "error_type": "false_negative",
+      "n": 3530,
+      "identity_bearing": 2523,
+      "counter_speech": 347,
+      "negation": 1953,
+      "self_identification": 1077,
+      "quotation_or_report": 1279,
+      "question": 312
+    }
+  ],
+  "note": "Heuristic pre-sort only. The paper reports hand-coded counts over a sample drawn from these candidates, and labels them as such."
+}

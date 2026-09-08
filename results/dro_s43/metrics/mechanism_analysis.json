@@ -1,0 +1,116 @@
+{
+  "config_sha": "58d225ed41cd",
+  "seed": 43,
+  "stage": "mechanism_analysis",
+  "toxic_rate_fit": {
+    "baseline": {
+      "n_subgroups": 15,
+      "slope": 0.6697279019185062,
+      "intercept": -0.030110664386152033,
+      "pearson_r": 0.9038921726189679,
+      "toxic_rate_min": 0.0902344909468685,
+      "toxic_rate_max": 0.3123197362999588,
+      "subgroups": [
+        "female",
+        "male",
+        "christian",
+        "white",
+        "muslim",
+        "black",
+        "homosexual_gay_or_lesbian",
+        "jewish",
+        "psychiatric_or_mental_illness",
+        "asian",
+        "transgender",
+        "latino",
+        "atheist",
+        "heterosexual",
+        "buddhist"
+      ]
+    },
+    "mitigated": {
+      "n_subgroups": 15,
+      "slope": 1.808380424535189,
+      "intercept": -0.0752361143170842,
+      "pearson_r": 0.9380800181236165,
+      "toxic_rate_min": 0.0902344909468685,
+      "toxic_rate_max": 0.3123197362999588,
+      "subgroups": [
+        "female",
+        "male",
+        "christian",
+        "white",
+        "muslim",
+        "black",
+        "homosexual_gay_or_lesbian",
+        "jewish",
+        "psychiatric_or_mental_illness",
+        "asian",
+        "transgender",
+        "latino",
+        "atheist",
+        "heterosexual",
+        "buddhist"
+      ]
+    }
+  },
+  "slope_change": 1.7001718449461234,
+  "matched_operating_points": [
+    {
+      "threshold": 0.7,
+      "global_fpr": 0.08454037360903643,
+      "mitigated_gap": 0.2583032693869692,
+      "baseline_gap_at_same_fpr": 0.2808626564982626,
+      "gap_reduction": 0.08032177503609472,
+      "comparable": true
+    },
+    {
+      "threshold": 0.6,
+      "global_fpr": 0.11134422047296957,
+      "mitigated_gap": 0.3407540047522376,
+      "baseline_gap_at_same_fpr": 0.3024932142309087,
+      "gap_reduction": null,
+      "comparable": false
+    },
+    {
+      "threshold": 0.5,
+      "global_fpr": 0.14096775817794263,
+      "mitigated_gap": 0.397835591346666,
+      "baseline_gap_at_same_fpr": 0.3024932142309087,
+      "gap_reduction": null,
+      "comparable": false
+    },
+    {
+      "threshold": 0.4,
+      "global_fpr": 0.1776237391114617,
+      "mitigated_gap": 0.4549232379725481,
+      "baseline_gap_at_same_fpr": 0.3024932142309087,
+      "gap_reduction": null,
+      "comparable": false
+    },
+    {
+      "threshold": 0.3,
+      "global_fpr": 0.22485356069888052,
+      "mitigated_gap": 0.49078855670576693,
+      "baseline_gap_at_same_fpr": 0.3024932142309087,
+      "gap_reduction": null,
+      "comparable": false
+    }
+  ],
+  "matched_reduction_min": 0.08032177503609472,
+  "matched_reduction_max": 0.08032177503609472,
+  "n_comparable_points": 1,
+  "gap_spread": {
+    "baseline": 0.22427494203420628,
+    "mitigated": 0.23248528731879775
+  },
+  "levelling": {
+    "direction": "levelling down",
+    "reason": "the worst-off subgroup did not improve; the gap closed because the best-off subgroup got worse",
+    "worst_fpr_before": 0.2043139604553625,
+    "worst_fpr_after": 0.5224685440383463,
+    "best_fpr_before": 0.0399673735725938,
+    "best_fpr_after": 0.12463295269168026
+  },
+  "note": "The toxic rate is measured on the test split, the same rows the FPR is measured on. Matched operating points are interpolated within the baseline's observed range only. A least-squares slope describes the association; it is not a causal estimate."
+}

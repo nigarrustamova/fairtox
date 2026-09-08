@@ -1,0 +1,77 @@
+{
+  "config_sha": "e20c7b5804cf",
+  "seed": 47,
+  "stage": "leakage_check",
+  "duplicates": {
+    "n_test": 67200,
+    "n_test_seen_in_train": 744,
+    "share_of_test": 0.01107142857142857,
+    "n_train_duplicate_rows": 3450,
+    "n_duplicate_texts_with_conflicting_labels": 174
+  },
+  "per_model": [
+    {
+      "model": "baseline",
+      "test_set": "full",
+      "n_rows": 67200,
+      "macro_f1": 0.8028578413747782,
+      "roc_auc": 0.9392571287280117,
+      "global_fnr": 0.4022837642735267,
+      "fpr_gap": 0.08484136145379922,
+      "macro_fpr": 0.06176941920269679,
+      "macro_fnr": 0.4732566736484531,
+      "n_reportable_fpr": 14
+    },
+    {
+      "model": "baseline",
+      "test_set": "deduplicated",
+      "n_rows": 66456,
+      "macro_f1": 0.8027285330318916,
+      "roc_auc": 0.9392764977900043,
+      "global_fnr": 0.40234635381949074,
+      "fpr_gap": 0.08499462436384045,
+      "macro_fpr": 0.06176643763303472,
+      "macro_fnr": 0.4740244858542082,
+      "n_reportable_fpr": 14
+    },
+    {
+      "model": "mitigated",
+      "test_set": "full",
+      "n_rows": 67200,
+      "macro_f1": 0.7991091640995707,
+      "roc_auc": 0.9329729094592781,
+      "global_fnr": 0.41895261845386533,
+      "fpr_gap": 0.09225726435152375,
+      "macro_fpr": 0.05383611060319447,
+      "macro_fnr": 0.5040835897913601,
+      "n_reportable_fpr": 14
+    },
+    {
+      "model": "mitigated",
+      "test_set": "deduplicated",
+      "n_rows": 66456,
+      "macro_f1": 0.7991324726806007,
+      "roc_auc": 0.933000930495333,
+      "global_fnr": 0.41861085188641517,
+      "fpr_gap": 0.09254618719079258,
+      "macro_fpr": 0.05379404518268941,
+      "macro_fnr": 0.5036135657529575,
+      "n_reportable_fpr": 14
+    }
+  ],
+  "mitigation_effect": {
+    "full": {
+      "fpr_gap": 0.007415902897724522,
+      "macro_fpr": -0.007933308599502316,
+      "macro_f1": -0.003748677275207557,
+      "macro_fnr": 0.030826916142907057
+    },
+    "deduplicated": {
+      "fpr_gap": 0.0075515628269521295,
+      "macro_fpr": -0.007972392450345311,
+      "macro_f1": -0.0035960603512908973,
+      "macro_fnr": 0.02958907989874926
+    }
+  },
+  "note": "Matching is on whitespace-collapsed lowercase text. Both arms share one partition, so the paired mitigation effect is contaminated identically on both sides and the 'deduplicated' effect is the one to compare it against. Duplicate texts carrying conflicting labels are annotator disagreement, not leakage, and are counted here only because it is the same scan."
+}

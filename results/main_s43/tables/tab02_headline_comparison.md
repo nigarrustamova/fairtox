@@ -1,0 +1,12 @@
+| axis    | metric       |   baseline |   mitigated |   delta |
+|:--------|:-------------|-----------:|------------:|--------:|
+| utility | macro_f1     |     0.8068 |      0.7900 | -0.0168 |
+| utility | roc_auc      |     0.9397 |      0.9322 | -0.0075 |
+| utility | pr_auc       |     0.7339 |      0.7164 | -0.0176 |
+| parity  | fpr_gap      |     0.1640 |      0.0526 | -0.1114 |
+| parity  | macro_fpr    |     0.0971 |      0.0340 | -0.0632 |
+| parity  | fpr_variance |     0.0022 |      0.0003 | -0.0019 |
+| parity  | eod_fpr      |     0.1567 |      0.0407 | -0.1160 |
+| safety  | macro_fnr    |     0.3561 |      0.5499 |  0.1938 |
+| safety  | fnr_gap      |     0.1570 |      0.1938 |  0.0368 |
+| safety  | global_fnr   |     0.3264 |      0.4579 |  0.1315 |
