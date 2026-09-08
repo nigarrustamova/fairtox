@@ -1,0 +1,4 @@
+probability,n_seeds,d_fpr_gap,sd,n_improved,d_macro_fnr,slope_change,note
+0.0,,0.0,,,0.0,,"baseline, by definition"
+0.5,5.0,-0.0031,0.0274,4.0,-0.0016,-0.076,
+1.0,5.0,0.0114,0.0192,1.0,0.045,-0.3091,
