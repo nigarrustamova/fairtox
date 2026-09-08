@@ -1,0 +1,190 @@
+%=============================================================================
+% FairTox -- contribution report (required in the repository root)
+%
+% Build:  latexmk -pdf contribution_report.tex
+%
+% The brief asks for one table with Member Name / Code / Report Sections /
+% Experiments / Slides / Other, plus a short description per member, agreed by
+% all members. The instructor cross-checks it against the Git history, so the
+% module ownership here is the same ownership the pull-request sequence follows
+% and the same one the defence deck is split along.
+%=============================================================================
+\documentclass[10pt]{article}
+
+\usepackage[a4paper,landscape,margin=1.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{fairblue}{HTML}{3B5BA5}
+\definecolor{fairgrey}{HTML}{6B7280}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\newcommand{\person}[2]{\textbf{#1}\\[0.2ex]{\footnotesize\color{fairgrey}#2}}
+
+\begin{document}
+
+{\Large\bfseries\color{fairblue} Contribution report}\\[0.6ex]
+{\normalsize FairTox --- \emph{Parity, Utility and Safety Are Not Independent}}\\[0.3ex]
+{\footnotesize\color{fairgrey}
+DLE-AI-202, Cohort I 2026 \,·\, Track 2 \,·\,
+\url{https://github.com/nigarrustamova/fairtox} (tag \texttt{v1.0-final})}
+
+\vspace{0.8em}
+
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{%
+  >{\raggedright\arraybackslash}p{0.115\textwidth}
+  >{\raggedright\arraybackslash}p{0.245\textwidth}
+  >{\raggedright\arraybackslash}p{0.165\textwidth}
+  >{\raggedright\arraybackslash}p{0.185\textwidth}
+  >{\raggedright\arraybackslash}p{0.105\textwidth}
+  >{\raggedright\arraybackslash}p{0.115\textwidth}}
+\toprule
+\textbf{Member} & \textbf{Code} & \textbf{Report sections} &
+\textbf{Experiments} & \textbf{Slides} & \textbf{Other} \\
+\midrule
+
+\person{Aliyev, Orkhan}{\texttt{@mrorxan}} &
+Stage registry and scaffolding; loss weighting and Group DRO
+(\texttt{training/losses.py}); comparability and reuse fingerprints
+(\texttt{provenance.py}); benchmark bias metrics
+(\texttt{fairness/jigsaw\_metrics.py}); controlled comparison
+(\texttt{stages/compare.py}); ablation (\texttt{stages/ablate.py}); mechanism
+analysis (\texttt{stages/mechanism.py}); cross-family statistics
+(\texttt{evaluation/aggregate.py}, \texttt{scripts/summarise\_study.py});
+run orchestration (\texttt{pipeline.py}) &
+Method; Results A--D, F--H (headline pair, all eight configurations, mechanism,
+threshold matching, Group DRO, held-out axes, ablation); Discussion;
+Conclusion &
+Headline pair over eight seeds; fixed-epoch control; Group DRO; held-out-axis
+arm; $\alpha$ sweep and the \texttt{class} control; mechanism and
+matched-threshold analyses &
+15--19 (mechanism, the loss, headline, all families, the three controls) &
+Experiment plan and pre-registered outcomes; scheduling of the booked GPU
+window \\
+\addlinespace
+
+\person{Mirzayeva, Laman}{\texttt{@lmnmrzyv}} &
+Global classification metrics (\texttt{evaluation/metrics.py}); stratified
+split and fingerprint (\texttt{data/split.py}); subgroup auditor with Wilson
+intervals and support floors (\texttt{fairness/auditor.py}); all plotting
+(\texttt{utils/plotting.py}); audit stage; error analysis and the coded sample;
+per-subgroup thresholds (\texttt{stages/postproc.py}); duplicate check
+(\texttt{stages/leakage.py}); optional analyses; CI workflow &
+Problem Formulation (two errors, three axes, the three guards,
+pre-registration); Results I--M (threshold-free metrics, post-processing, the
+manual coding, who is affected, integrity and leakage); Limitations &
+Subgroup audits and threshold sensitivity; the training-free post-processing
+arm; the leakage measurement; manual coding of 60 identity-bearing false
+positives &
+7--10 (three axes, five guards, what the errors are, two coded examples) &
+Figure review before submission; test coverage for two other members' modules
+\\
+\addlinespace
+
+\person{Rustamova, Nigar}{\texttt{@nigarrustamova}} &
+Repository, branch protection and release tag; logging
+(\texttt{utils/logging\_utils.py}); configuration system
+(\texttt{config.py}, \texttt{configs/default.yaml}, \texttt{smoke.yaml});
+artefact I/O and prediction format (\texttt{utils/io.py},
+\texttt{evaluation/predictions.py}); corpus loader and synthetic corpus
+(\texttt{data/load.py}); EDA and TF-IDF baseline stages; command-line entry
+point (\texttt{scripts/run\_all.py}, \texttt{run\_all.sh}); \texttt{README.md}
+&
+Introduction; Related Work (measuring unintended bias, and the gap this paper
+fills); Experimental Setup (corpus and splits, implementation and
+reproducibility); Tools and Acknowledgements &
+Corpus EDA and subgroup support counts; the TF-IDF + logistic-regression
+baseline; the synthetic smoke pipeline used to validate the code path &
+3--6 (the problem, the three intervention points, the corpus, the classical
+baseline) &
+Repository owner and submitter; one-command reproduction path; documentation
+review \\
+\addlinespace
+
+\person{Samadov, Nijat}{\texttt{@NijatSamadov}} &
+Device and seed utilities; tokenisation and dataset
+(\texttt{data/dataset.py}); classifier head (\texttt{models/transformer.py});
+fine-tuning loop (\texttt{training/trainer.py}); training stage
+(\texttt{stages/train.py}); counterfactual augmentation
+(\texttt{data/augment.py}); token attribution
+(\texttt{explain/attributions.py}); the eight booked-window configuration
+files; \texttt{TRAINING\_DAY.md} and the Kaggle runner notebook &
+Related Work (pre-processing); Experimental Setup (model and training,
+compute); Results E (counterfactual augmentation, dose response) &
+All 115 trainings inside the booked window; the DistilRoBERTa backbone arm;
+counterfactual swapping at both doses; the five-run noise-floor measurement &
+11--14 (the model, 115 models and the noise floor, the swap, the null result)
+&
+Server environment (MIG targeting, CUDA build); recovery of the interrupted
+window \\
+\bottomrule
+\end{tabular}
+
+\newpage
+
+{\normalsize\bfseries\color{fairblue} Short description per member}
+
+\vspace{0.5em}
+\footnotesize
+\begin{tabular}{%
+  >{\raggedright\arraybackslash}p{0.14\textwidth}
+  >{\raggedright\arraybackslash}p{0.82\textwidth}}
+\textbf{Aliyev, Orkhan} &
+Owned the objective and the comparison machinery: the per-sample weighting, the
+Group DRO control, the fingerprints that make a controlled pair legitimate, and
+the stages that turn two arms into a verdict. Wrote the mechanism analysis --- the
+regression of subgroup FPR on subgroup toxic rate --- and the cross-family
+aggregation that produces every table in the paper. Ran the eight-seed headline
+replication and the three controls behind the paper's central claim. \\
+\addlinespace
+\textbf{Mirzayeva, Laman} &
+Owned measurement. Wrote the metrics, the stratified split, and the subgroup
+auditor, including the two decisions that keep the fairness numbers honest:
+separate support floors for FPR and FNR, and Wilson intervals rather than a
+bootstrap. Wrote every figure routine, the error-analysis stage, and the
+training-free post-processing arm, and read and coded all 60 sampled false
+positives by hand. \\
+\addlinespace
+\textbf{Rustamova, Nigar} &
+Set up the repository and the infrastructure the rest of the work sits on:
+configuration, logging, artefact I/O, the prediction format, the corpus loader
+and the driver that makes the study one command from a clean checkout. Wrote
+the EDA and the classical TF-IDF baseline the deep model is measured against,
+and the README. Submits the deliverables on behalf of the team. \\
+\addlinespace
+\textbf{Samadov, Nijat} &
+Owned the model and the training path: tokenisation, the classifier head, the
+fine-tuning loop and the training stage, plus the configuration files for the
+booked window. Ran the window itself --- 38 runs, 115 models, 34.4 GPU-hours ---
+and diagnosed the CUDA and MIG problems that blocked it. Wrote the
+counterfactual-augmentation arm and the token-attribution analysis. \\
+\end{tabular}
+
+\vspace{1.6em}
+
+{\footnotesize
+\textbf{Balance and cross-review.} No directory is owned by one person:
+\texttt{stages/} and \texttt{tests/} are shared by all four, and
+\texttt{utils/}, \texttt{data/}, \texttt{evaluation/}, \texttt{fairness/} and
+\texttt{training/} each have two or three owners. Tests are deliberately written
+by someone other than the module's author in eight pull requests, so every
+member has read and tested at least two other members' code. Every member
+reviewed pull requests from every other member.
+
+\vspace{0.6em}
+\textbf{Agreement.} All four members have read this report and agree that it
+describes the division of work accurately. Prepared for the final submission of
+DLE-AI-202, September 2026.}
+
+\end{document}
