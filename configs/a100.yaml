@@ -1,0 +1,31 @@
+# The booked-window configuration: shared A100 40 GB, MIG 3g.20gb slice.
+#
+#   bash run_all.sh configs/a100.yaml
+#
+# The spare VRAM is deliberately not spent on a larger batch. At batch 64 the
+# model is already compute-bound, so 64 -> 128 buys minutes on a two-GPU-hour
+# tier while halving the optimizer steps (5,250 -> 2,625) and pushing the alpha
+# sweep closer to collapse. The budget went on extra seeds instead.
+# Measured on the slice: 0.065 s/step, 3.9 GB reserved of 19.5 GB.
+#
+# Change settings HERE, never with a per-arm --set: an override applied to one
+# arm gives the two arms different training fingerprints and `compare` refuses
+# the pair.
+extends: default.yaml
+
+run:
+  name: "main"
+
+training:
+  batch_size: 64
+
+  # Inference carries no optimizer state, so a large evaluation batch is nearly
+  # free and cannot change a prediction.
+  eval_batch_size: 384
+
+  # Scaled with the batch by sqrt(2) rather than 2x -- the safer convention for
+  # short fine-tuning runs on a pretrained backbone.
+  learning_rate: 3.0e-5
+
+  mixed_precision: true
+  num_workers: 4
