@@ -12,12 +12,16 @@ both lines.
 
 from . import (
     _planned,
+    attributions,
     eda,
     tfidf_baseline,
+    train,
 )
 
 __all__ = [
     "_planned",
+    "attributions",
     "eda",
     "tfidf_baseline",
+    "train",
 ]
