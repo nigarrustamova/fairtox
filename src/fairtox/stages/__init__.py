@@ -13,7 +13,9 @@ both lines.
 from . import (
     _planned,
     attributions,
+    audit,
     eda,
+    error_analysis,
     tfidf_baseline,
     train,
 )
@@ -21,7 +23,9 @@ from . import (
 __all__ = [
     "_planned",
     "attributions",
+    "audit",
     "eda",
+    "error_analysis",
     "tfidf_baseline",
     "train",
 ]
