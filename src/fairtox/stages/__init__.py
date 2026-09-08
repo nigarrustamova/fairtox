@@ -18,7 +18,10 @@ from . import (
     compare,
     eda,
     error_analysis,
+    leakage,
     mechanism,
+    optional_analyses,
+    postproc,
     tfidf_baseline,
     train,
 )
@@ -31,7 +34,10 @@ __all__ = [
     "compare",
     "eda",
     "error_analysis",
+    "leakage",
     "mechanism",
+    "optional_analyses",
+    "postproc",
     "tfidf_baseline",
     "train",
 ]
