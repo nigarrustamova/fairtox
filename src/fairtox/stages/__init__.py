@@ -10,8 +10,14 @@ but is kept alphabetical here so merge conflicts in this file resolve by keeping
 both lines.
 """
 
-from . import _planned
+from . import (
+    _planned,
+    eda,
+    tfidf_baseline,
+)
 
 __all__ = [
     "_planned",
+    "eda",
+    "tfidf_baseline",
 ]
