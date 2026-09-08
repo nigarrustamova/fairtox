@@ -1,0 +1,5 @@
+family,bucket,n_seeds,mean_d_fpr,sd,ci_low,ci_high,excludes_zero,n_seeds_improved,sign_p,n_subgroup_obs,n_subgroup_improved
+heldout,weighted,8,-0.0277,0.0162,-0.0412,-0.0142,True,8,0.0078,58,56
+heldout,held_out,8,-0.0161,0.0185,-0.0315,-0.0007,True,6,0.2891,56,36
+main,weighted,8,-0.0258,0.0124,-0.0362,-0.0155,True,8,0.0078,58,56
+main,held_out,8,-0.0392,0.0193,-0.0553,-0.023,True,8,0.0078,56,55
