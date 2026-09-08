@@ -1,0 +1,100 @@
+# Lint, tests and an end-to-end pipeline run on every push.
+#
+# The brief lists reproducible CI as an optional bonus. It earns its place for a
+# more practical reason: the smoke job proves the whole MUST tier runs from a
+# clean checkout, with no dataset and no GPU. That is the check which catches a
+# broken stage before it costs a booked training window.
+name: CI
+
+on:
+  push:
+    branches: [main, test]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint
+        # The WHOLE repository, not just src/: the notebook is code too, and its
+        # final cell shipped an unterminated string literal that `ruff check
+        # src/ scripts/ tests/` could never have seen. `logs/` is excluded in
+        # pyproject.toml because it is a record of the booked window, not source.
+        run: python -m ruff check .
+
+      - name: Test
+        run: python -m pytest tests/ -q
+
+  smoke:
+    # Runs the real pipeline end to end on generated data. It needs the small
+    # backbone from the Hub, so it is a separate job: a Hub outage should show up
+    # as "smoke failed", not as "the test suite is broken".
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate a synthetic corpus
+        run: python scripts/make_synthetic_data.py --rows 6000
+
+      - name: Run the full MUST tier
+        run: bash run_all.sh configs/smoke.yaml
+
+      - name: Run the optional tier without retraining
+        run: |
+          python scripts/run_all.py -c configs/smoke.yaml \
+            --only threshold_sensitivity jigsaw_bias_metrics --no-deps
+
+      - name: Check the headline artefacts exist
+        run: |
+          set -e
+          for artefact in \
+            results/smoke/metrics/compare.json \
+            results/smoke/metrics/ablate.json \
+            results/smoke/tables/tab02_headline_comparison.csv \
+            results/smoke/tables/tab03_ablation.csv \
+            results/smoke/figures/fig05_fpr_by_subgroup.png \
+            results/smoke/figures/fig06_fnr_by_subgroup.png
+          do
+            test -s "$artefact" || { echo "MISSING OR EMPTY: $artefact"; exit 1; }
+            echo "ok: $artefact"
+          done
+
+      - name: Redraw every figure from the metrics alone
+        # No GPU, no predictions, no model. The guarantee is that a plotting
+        # change can always be applied to results already on disk, which is why
+        # a stale figure can never outlive the code that drew it.
+        run: python scripts/rebuild_figures.py --results results
+
+      - name: Upload the smoke artefacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-results
+          path: results/smoke/
+          retention-days: 7
