@@ -1,0 +1,39 @@
+# Experiment C2 (OPTIONAL): is counterfactual augmentation's cheap exchange rate
+# real, or an artefact of operating at a small effect size?
+#
+# C ran at probability 0.5 and returned outcome A three times: a small parity
+# gain (-0.0144) for almost no safety cost (+0.0055), an exchange rate of 0.38
+# against reweighting's 2.19. Six times cheaper -- but it also bought only 28% as
+# much parity, and one seed bought essentially none.
+#
+# THOSE PREMISE NUMBERS DID NOT SURVIVE. Both families were extended to five
+# seeds, and C's parity gain fell to -0.0031 with a CI spanning zero: the three
+# outcome-A verdicts were a small-sample artefact, so there was never a cheap
+# exchange rate to explain.
+#
+# Those two readings cannot be separated at one intensity. If the tax stays near
+# 0.4 while the gap reduction grows, the data-level intervention genuinely
+# dominates the loss-level one, and that is the paper's headline. If the tax
+# climbs toward 2 as the effect grows, every method in the study sits on one
+# shared frontier and CDA was simply a weaker dose of the same medicine.
+#
+# ONE knob changes: probability 0.5 -> 1.0. Everything else, including the
+# augmentation seed, is identical to a100_cda.yaml, so the pair differs in dose
+# and in nothing else.
+#
+# RESULT: neither reading. Doubling the dose does not grow the effect -- the gap
+# goes the OTHER way (+0.0114, 1/5 seeds improved) -- so CDA is a null result at
+# both intensities. But the shortcut regression flattens by 30.9% at p=1.0
+# against 7.6% at p=0.5, which is the finding: the augmentation demonstrably does
+# its job, and the disparity survives it anyway. Removing the lexical shortcut is
+# NOT sufficient to remove the disparity.
+#
+#   RUN IT WITH --only, NOT WITH THE FULL MUST TIER.
+extends: a100_cda.yaml
+
+run:
+  name: "cdafull"
+
+mitigation:
+  augmentation:
+    probability: 1.0

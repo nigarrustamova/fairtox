@@ -1,0 +1,21 @@
+# Experiment B: does any of this generalise beyond one backbone?
+#
+# distilroberta-base has a different pretraining corpus and a different tokenizer
+# (byte-level BPE, not WordPiece) in the same compute class: 82M parameters
+# against 66M. A larger model from the same family would test size, not
+# generality.
+#
+# The recipe is UNCHANGED on purpose -- retuning would confound the backbone
+# comparison with a tuning difference. No code change is needed either: the head
+# reads position 0 of the last hidden state, which is `<s>` for RoBERTa and
+# `[CLS]` for BERT.
+#
+# RESULT: the phenomenon reproduces and is stronger; the mitigation works better
+# here (14/14 subgroups improved, slope halved) at a larger safety cost.
+extends: a100.yaml
+
+run:
+  name: "drob"
+
+model:
+  backbone: "distilroberta-base"

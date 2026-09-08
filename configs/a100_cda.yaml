@@ -1,0 +1,44 @@
+# Experiment C: the same question, attacked from the data instead of the loss.
+#
+# Everything reported so far comes from ONE mitigation family -- per-sample loss
+# weights. That is enough to say "in this weighting family, parity and safety are
+# structurally coupled" and not enough to say anything about the problem. This
+# run adds a mitigation from a different family: counterfactual identity-term
+# swapping in the training text (Dixon et al., 2018), the method the Jigsaw bias
+# benchmark was introduced with.
+#
+# If the safety cost appears here too, the coupling is a property of the task and
+# not of our loss function -- which is a far stronger claim than the headline run
+# can support on its own. If it does not, we have found a mitigation that beats
+# ours, and that is a better paper than one more confirmation.
+#
+# The recipe is UNCHANGED from a100.yaml on purpose. Retuning would confound the
+# method comparison with a tuning difference, exactly as it would have in
+# experiment B.
+#
+# RESULT: a null result at five seeds -- -0.0031, CI [-0.0371, +0.0309], 4/5.
+# The three-seed reading (-0.0144, outcome A 3/3) did not survive the two extra
+# seeds. configs/a100_cda_full.yaml settles it by dose.
+#
+#   RUN IT WITH --only, NOT WITH THE FULL MUST TIER.
+#
+# `ablate` sweeps alpha, and alpha is not defined for this arm: under
+# `scheme: none` the sweep would train six more models to measure a knob this
+# mitigation does not have. The launch command in TRAINING_DAY.md selects the
+# stages that mean something here and lets the driver pull their dependencies.
+extends: a100.yaml
+
+run:
+  name: "cda"
+
+mitigation:
+  # OFF. The mitigated arm in this run is PURE augmentation, so the comparison
+  # against the headline run is one mitigation against another and not one
+  # against two stacked together.
+  scheme: "none"
+
+  augmentation:
+    enabled: true
+    probability: 0.5
+    seed: 13
+    scope: "all"

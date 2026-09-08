@@ -1,0 +1,29 @@
+# Experiment E: the checkpoint-selection control.
+#
+# The headline runs keep the epoch with the best validation macro-F1. Both arms
+# follow that rule, so the protocol is fair -- but the two arms do not peak on the
+# same epoch. Across seeds 42/43/44 the baseline was kept at epoch 1, 1, 2 and the
+# mitigated arm at 2, 2, 2. The kept models therefore differ in the weight vector
+# AND in how much training they received, which is one more difference than the
+# study claims to have.
+#
+# It matters more than it looks. The mitigated arm's global FPR is almost
+# constant across seeds (0.0256 / 0.0258 / 0.0266) while the baseline's swings by
+# 65% (0.0289 / 0.0476 / 0.0389), and the baseline is the arm whose kept epoch
+# varies. So the reported effect SIZE -- which already varies four-fold across
+# seeds -- may be substantially a property of which baseline checkpoint was kept,
+# not of the mitigation.
+#
+# This run removes the difference: both arms keep the final epoch, no early
+# stopping, everything else identical. If the effect survives, the objection is
+# answered with data instead of with an argument. If it shrinks, we report the
+# smaller number, because that is the honest one.
+#
+#   RUN IT WITH --only, NOT WITH THE FULL MUST TIER.
+extends: a100.yaml
+
+run:
+  name: "lastep"
+
+training:
+  select_checkpoint: "last"

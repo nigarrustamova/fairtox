@@ -1,0 +1,27 @@
+# Experiment A: can the safety cost be bought back?
+#
+# The headline run landed on outcome C: parity improved, but subgroup FNR rose
+# 13.3 points (the three-seed figure this run was launched against; the
+# eight-seed value is +11.4). The reason is structural -- `subgroup` weighting
+# raises only the
+# non-toxic identity-bearing cell, so the cheapest way for the model to satisfy
+# it is to become cautious about identity-bearing text in general, including the
+# text that genuinely is abusive.
+#
+# This tests the obvious counter-move: raise the identity-bearing TOXIC cell too.
+#
+# RESULT: hypothesis refuted. Half the FNR cost comes back, but most of the
+# parity gain goes with it, and what remains is levelling down -- see section 06
+# of the results write-up.
+extends: a100.yaml
+
+run:
+  name: "wtox"
+
+mitigation:
+  weights:
+    background: 1.0
+    # null keeps the swept knob: identity_nontoxic takes mitigation.alpha, as in
+    # the headline run. Only the toxic cell changes.
+    identity_nontoxic: null
+    identity_toxic: 2.0
