@@ -1,0 +1,235 @@
+# FairTox -- the study definition.
+#
+# ONE file drives the whole MUST tier. The baseline and the mitigated arm are the
+# same code path reading these same values and differ only in the per-sample
+# weight vector handed to the loss, so there is no `mitigated.yaml` to drift out
+# of sync. Machine-specific files `extends:` this one.
+
+run:
+  name: "main"          # results/<name>/ and experiments/<name>/
+  seed: 42
+  device: "auto"        # auto -> cuda when available, else cpu
+  log_level: "INFO"
+  force_retrain: false
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  raw_file: null        # null -> first of train.csv / all_data.csv / civil_comments.csv
+  text_column: "comment_text"
+  target_column: "target"
+
+  # The released target is the fraction of annotators who called a comment toxic.
+  # threshold_sensitivity re-runs the audit at other values, so 0.5 is reported
+  # as an assumption rather than a fact.
+  toxicity_threshold: 0.5
+  identity_threshold: 0.5
+
+  # An unrated row is not an identity-free row. Conflating them would sweep
+  # genuinely identity-bearing comments into the background weight.
+  annotated_only: true
+
+  # Keep off for anything that reaches the paper: the reporting floor is counted
+  # on the test split, so subsampling removes the small subgroups the study is
+  # about.
+  subsample: null
+
+  # 0.15 test, not the usual 0.10: costs ~6% throughput, buys 50% more subgroup
+  # support, and subgroup support is what limits how many groups we can discuss.
+  splits:
+    train: 0.75
+    val: 0.10
+    test: 0.15
+
+  # Absent columns are dropped with a warning, so this list is safe across every
+  # release of the corpus.
+  identity_columns:
+    - male
+    - female
+    - transgender
+    - other_gender
+    - heterosexual
+    - homosexual_gay_or_lesbian
+    - bisexual
+    - other_sexual_orientation
+    - christian
+    - jewish
+    - muslim
+    - hindu
+    - buddhist
+    - atheist
+    - other_religion
+    - black
+    - white
+    - asian
+    - latino
+    - other_race_or_ethnicity
+    - physical_disability
+    - intellectual_or_learning_disability
+    - psychiatric_or_mental_illness
+    - other_disability
+
+model:
+  backbone: "distilbert-base-uncased"
+  dropout: 0.2
+  max_seq_length: 128
+  freeze_encoder: false
+
+training:
+  batch_size: 32
+  eval_batch_size: 128
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  num_epochs: 3
+  max_grad_norm: 1.0
+  gradient_accumulation_steps: 1
+  mixed_precision: true
+  num_workers: 0
+  log_every_n_steps: 100
+  early_stopping_patience: 2
+
+  # Not accuracy: a model that flags nothing scores ~90% on this corpus.
+  early_stopping_metric: "val_macro_f1"
+
+  # "best" keeps the epoch with the highest early_stopping_metric on validation;
+  # "last" keeps the final epoch and disables early stopping.
+  #
+  # "best" is the study, because model selection on validation is part of any
+  # honest recipe and both arms follow the identical rule. But the two arms do
+  # NOT peak on the same epoch -- across the three headline seeds the baseline
+  # peaked at epoch 1, 1, 2 and the mitigated arm at 2, 2, 2 -- so the kept
+  # models differ in more than the weight vector even though the recipe does not.
+  # configs/a100_lastep.yaml re-runs the pair under "last", which is the control
+  # that says whether the measured effect survives with that difference removed.
+  select_checkpoint: "best"   # best | last
+
+  # The per-team allocation, not a safety margin. The brief said 10-12 GB; the
+  # TAs raised it to 20. Exceeding it is an automatic deduction.
+  memory_budget_gb: 20.0
+
+mitigation:
+  scheme: "subgroup"    # none | class | subgroup
+  alpha: 4.0            # weight on non-toxic comments that mention an identity
+  weights:
+    background: 1.0
+    identity_nontoxic: null   # null -> use alpha (this is the swept knob)
+    identity_toxic: 1.0
+
+  # Which identity columns the WEIGHTING is allowed to see. null means all of
+  # them, which is the study. A subset makes the run a generalisation test: the
+  # loss is told about some axes only, while the audit keeps measuring every
+  # subgroup, so the held-out groups answer whether the intervention teaches the
+  # model about identity-bearing language in general or only about the tokens it
+  # was paid to notice. configs/a100_heldout.yaml sets it.
+  #
+  # The audit is never narrowed to match. Measuring the arm only on the groups it
+  # was tuned for is the one comparison that cannot fail.
+  weighting_columns: null
+
+  # The training objective. "bce" is the weighted cross-entropy the whole study
+  # runs on; "group_dro" (Sagawa et al., 2020) replaces the weight vector we
+  # choose with one the optimiser learns online over the SAME four
+  # (identity x label) cells. Same cells, same place in the pipeline -- the only
+  # difference is who picks the weights, which is what makes it comparable
+  # rather than merely adjacent. configs/a100_dro.yaml turns it on.
+  objective: "bce"      # bce | group_dro
+  dro:
+    # Sagawa's eta. 0.01 is their default for a short fine-tune; larger values
+    # chase the worst cell hard enough to destabilise a 3-epoch run.
+    step_size: 0.01
+
+  # The pre-processing arm (Dixon et al., 2018): swap identity terms in the
+  # training text so the token stops predicting the label. OFF here, because the
+  # headline study is the weighting one and one config must describe one
+  # mitigation. configs/a100_cda.yaml turns this on and the weighting off, so the
+  # two are measured one at a time and neither is confounded by the other.
+  augmentation:
+    enabled: false
+
+    # Probability that a training row is rewritten. 0.5 halves the term-label
+    # correlation instead of erasing it; 1.0 would erase it and, with it, the
+    # genuine differences in how groups are discussed. This is the knob an
+    # ablation would sweep, exactly as alpha is for the weighting arm -- and no
+    # sweep of it is reported, so 0.5 is a pre-registered choice, not a tuned one.
+    probability: 0.5
+
+    # Its own seed, so run.seed keeps moving the split and the initialisation
+    # while the augmentation stays reproducible independently of them.
+    seed: 13
+
+    # "all" | "nontoxic". Rewriting only the non-toxic side would break the
+    # term-label association there and leave it intact on the toxic side, which
+    # builds a new shortcut in place of the old one.
+    scope: "all"
+
+evaluation:
+  classification_threshold: 0.5
+
+  # Rows needed on the relevant side of the confusion matrix before a subgroup
+  # rate enters an aggregate. Below it the rate is still reported, but it cannot
+  # drive the headline number out of noise.
+  min_support: 100
+  min_reportable_subgroups: 6   # warn below this; a thin fairness paper
+
+  # wilson | bootstrap. At zero observed false positives the percentile bootstrap
+  # returns [0, 0] whether the subgroup has 120 rows or 12,000.
+  ci_method: "wilson"
+  confidence_level: 0.95
+  bootstrap_samples: 2000
+
+ablation:
+  # "none" is omitted: it is arithmetically the baseline, and any arm whose
+  # weights come out uniform reuses the baseline instead of retraining it.
+  schemes: ["class", "subgroup"]
+
+  # mitigation.alpha must appear here, or the trade-off figure would omit the
+  # point the paper's claim sits on. The high end is expected to collapse; that
+  # is a result, and collapsed arms are flagged rather than reported.
+  alphas: [1.0, 2.0, 4.0, 6.0, 10.0]
+
+verdict:
+  # Fixed in a file that predates the results. Choosing them afterwards would be
+  # choosing the conclusion.
+  utility_tolerance: 0.01   # macro-F1 drop still counted as near-Pareto (A)
+  safety_tolerance: 0.02    # macro-FNR rise that triggers the safety verdict (C)
+
+tfidf:
+  max_features: 50000
+  ngram_max: 2
+  min_df: 2
+  max_iter: 1000
+  C: 1.0
+
+  # Not null. Unweighted, this baseline reached FNR 0.97 and macro-F1 0.50 -- a
+  # straw man. Balancing makes the classical baseline stronger, so any advantage
+  # we report for the transformer is understated rather than inflated.
+  class_weight: "balanced"
+
+sensitivity:
+  thresholds: [0.3, 0.4, 0.5, 0.6, 0.7]
+
+attributions:
+  n_examples: 20
+  n_steps: 32
+
+error_analysis:
+  examples_per_category: 15
+
+  # A second sample, drawn uniformly instead of from the confident tail. Counting
+  # categories over the confident tail would estimate the composition of the
+  # tail, not of the errors.
+  coding_sample_size: 60
+
+  # Its own seed: changing run.seed must not redraw a sample already coded.
+  coding_seed: 7
+
+  # A committed record of human judgement, not a run artefact.
+  coding_file: "analysis/error_coding.csv"
+
+analysis:
+  # Empty `seed_runs` discovers every completed run matching the glob. Discovery
+  # is the default because a manual list is the step that gets forgotten, and a
+  # forgotten list looks exactly like "we only ran one seed".
+  seed_runs: []
+  seed_run_glob: "main*"

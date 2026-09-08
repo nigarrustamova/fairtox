@@ -1,0 +1,46 @@
+# Synthetic-data smoke run: the whole pipeline end to end, no download, no GPU.
+# CI runs this on every push.
+#
+#   python scripts/make_synthetic_data.py --rows 6000
+#   bash run_all.sh configs/smoke.yaml
+#
+# Nothing here produces a finding. Results from this config are a pipeline check.
+extends: default.yaml
+
+run:
+  name: "smoke"
+  device: "cpu"
+
+model:
+  # Google's 2-layer BERT: 4.4M parameters and a 17 MB download, same WordPiece
+  # tokenizer as the real backbone, so every code path exercised here is the one
+  # the real run takes. (Not prajjwal1/bert-tiny, which ships no tokenizer files
+  # and cannot be loaded by AutoTokenizer at all.)
+  backbone: "google/bert_uncased_L-2_H-128_A-2"
+  max_seq_length: 64
+
+training:
+  batch_size: 16
+  eval_batch_size: 64
+  num_epochs: 1
+  learning_rate: 5.0e-5
+  mixed_precision: false
+  log_every_n_steps: 20
+  early_stopping_patience: 1
+  memory_budget_gb: null
+
+evaluation:
+  # At the real floor of 100 no synthetic subgroup would qualify, every aggregate
+  # would come back undefined, and the smoke run would test the guard clauses
+  # instead of the audit.
+  min_support: 10
+  min_reportable_subgroups: 3
+  bootstrap_samples: 200
+
+ablation:
+  schemes: ["class", "subgroup"]
+  alphas: [1.0, 4.0]
+
+tfidf:
+  max_features: 5000
+  min_df: 1
