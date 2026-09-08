@@ -1,0 +1,12 @@
+\begin{tabular}{lrrrrrr}
+\toprule
+Configuration & $n$ & BPSN base & BPSN mit. & $\Delta$ BPSN & $\Delta$ BNSP & $\Delta$ AUC \\
+\midrule
+loss reweighting (headline) & 8 & $0.8751$ & $0.8865$ & $+0.0114$ & $-0.0169$ & $-0.0061$ \\
+reweighting, DistilRoBERTa & 3 & $0.8788$ & $0.8941$ & $+0.0153$ & $-0.0170$ & $-0.0046$ \\
+counterfactual swap, $p=0.5$ & 5 & $0.8738$ & $0.8712$ & $-0.0026$ & $-0.0003$ & $-0.0015$ \\
+counterfactual swap, $p=1.0$ & 5 & $0.8738$ & $0.8726$ & $-0.0012$ & $-0.0072$ & $-0.0042$ \\
+Group DRO, learned weights & 3 & $0.8746$ & $0.8844$ & $+0.0098$ & $-0.0166$ & $-0.0070$ \\
+reweighting, 2 of 5 identity axes & 8 & $0.8751$ & $0.8770$ & $+0.0019$ & $-0.0157$ & $-0.0057$ \\
+\bottomrule
+\end{tabular}
