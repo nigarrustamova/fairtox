@@ -1,0 +1,37 @@
+# Experiment D: we chose the weights. What if the optimiser chooses them?
+#
+# The headline method hands the loss a weight vector we picked in advance:
+# (1, 1, alpha, 1) over the four (identity x label) cells. Group DRO (Sagawa et
+# al., 2020) keeps everything else identical and *learns* that vector online,
+# raising whichever cell currently has the highest loss.
+#
+# That makes this the tightest control in the whole study. It is not "another
+# fairness method" -- it is our method with the one human decision removed. If
+# the safety cost survives it, the cost cannot be blamed on our choice of alpha,
+# which is the most obvious remaining objection to the headline result. And the
+# learned weights are themselves reportable: the run records what the algorithm
+# decided, so the paper can print it beside what we assumed.
+#
+# The recipe is UNCHANGED from a100.yaml, as in every other experiment here.
+#
+# RESULT: outcome D in 3/3 -- the FPR gap went 2.6x WORSE (+0.1904) while macro
+# FNR fell 0.2308. The learned weights say why: DRO zeroed the easy majority cell
+# and split its weight across BOTH identity cells, rediscovering the wtox
+# configuration without a human choosing it, and reproducing its failure mode
+# amplified. The safety cost cannot be blamed on our choice of alpha.
+#
+#   RUN IT WITH --only, NOT WITH THE FULL MUST TIER.
+#
+# `ablate` sweeps alpha, and this arm has no alpha -- the weights are learned.
+# The launch command selects the stages that mean something here and lets the
+# driver pull in their dependencies.
+extends: a100.yaml
+
+run:
+  name: "dro"
+
+mitigation:
+  # OFF. The static weights would fight the learned ones and the arm would
+  # measure both at once.
+  scheme: "none"
+  objective: "group_dro"

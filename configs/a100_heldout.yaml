@@ -1,0 +1,62 @@
+# Experiment F: does the mitigation generalise to groups it was never paid to see?
+#
+# Everything reported so far shows the FPR gap shrinking on the same subgroups the
+# weighting was computed from. That leaves the mechanism claim ambiguous. The
+# model may have learned "identity-bearing language deserves more care", which
+# would transfer; or it may have learned "these particular tokens are expensive",
+# which would not. Nothing measured so far can tell those apart, and it is the
+# weakest link in the paper's mechanism story.
+#
+# So the loss is told about TWO AXES ONLY -- gender and religion -- while the
+# audit keeps measuring every subgroup, exactly as in every other run. The
+# reportable subgroups then split evenly, and the split is by AXIS rather than by
+# anything the results could influence:
+#
+#   weighted (7)   male, female, transgender, christian, jewish, muslim, atheist
+#   held out (7)   heterosexual, homosexual_gay_or_lesbian, black, white, asian,
+#                  latino, psychiatric_or_mental_illness
+#
+# Read it from `tables/audit_baseline.csv` and `tables/audit_mitigated.csv`: the
+# per-subgroup FPR change on the held-out seven IS the result. If it improves,
+# the intervention taught the model something general and the mechanism claim
+# gets its strongest evidence. If only the weighted seven improve, the effect is
+# token-bound and we say so -- that is a real finding too, and it explains why
+# counterfactual augmentation, which is also token-bound, failed.
+#
+# The audit is deliberately NOT narrowed to the weighted axes. Scoring the arm
+# only on the groups it was tuned for is the one comparison that cannot fail.
+#
+# Everything else is a100.yaml unchanged: same alpha, same recipe, same seeds.
+#
+# RESULT: it transfers, at 58% strength and with one qualification. Over eight
+# seeds the weighted axes improve by -0.0277 (8/8, p=0.0078) and the held-out
+# axes by -0.0161 (6/8, so the sign test does not reach significance: call it
+# suggestive). The transfer is a LEVEL SHIFT, not a slope change -- macro FPR
+# falls 8/8 while the shortcut regression flattens only 4.7%, against main's
+# 44.6%.
+#
+#   RUN IT WITH --only, NOT WITH THE FULL MUST TIER.
+#
+# `ablate` would sweep alpha on top of the narrowing and spend six GPU-hours per
+# seed on a question this run does not ask.
+extends: a100.yaml
+
+run:
+  name: "heldout"
+
+mitigation:
+  # Gender and religion only. `other_gender` and the three small religions are
+  # included because they belong to the two chosen axes -- membership is decided
+  # by the axis, never by whether the subgroup clears the reporting floor.
+  weighting_columns:
+    - male
+    - female
+    - transgender
+    - other_gender
+    - christian
+    - jewish
+    - muslim
+    - hindu
+    - buddhist
+    - atheist
+    - other_religion
