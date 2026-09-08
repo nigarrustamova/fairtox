@@ -1,0 +1,644 @@
+%=============================================================================
+% FairTox -- DLE-AI-202 final project, defence deck (Track 2)
+%
+% Build:  cd presentation && latexmk -pdf presentation.tex
+%
+% RULES THIS DECK FOLLOWS -- do not undo them:
+%
+% 1. Minimum text. A slide carries a figure or a table and at most a few short
+%    lines. The evidence is the object on the slide; the speaker is the prose.
+% 2. Figures come from results/<run>/figures/ wherever one exists -- they are
+%    already screen-sized with a title baked in. Only the two cross-run figures
+%    (s_families, s_dose) are rendered by scripts/make_slide_figures.py, because
+%    no run produces them. Tables come from scripts/make_slide_tables.py, which
+%    imports the paper's formatters, so no number here is typed by hand.
+% 3. Each speaker's block is CONTIGUOUS: nobody returns later in the deck.
+%    Shared frames (title, roadmap, limitations, conclusion) carry no name --
+%    the team answers those together.
+%
+%   1-2    shared             title, roadmap
+%   3-6    Rustamova, Nigar   the problem, the three families, the corpus, the
+%                             classical baseline
+%   7-10   Mirzayeva, Laman   the three axes, the guards, what the errors are,
+%                             two coded examples
+%   11-14  Samadov, Nijat     the model, the compute and the noise floor,
+%                             counterfactual swapping and its null result
+%   15-19  Aliyev, Orkhan     the mechanism, the loss, the headline, every
+%                             family, the three controls
+%   20-21  shared             limitations, conclusion
+%   22-23  backup             the alpha sweep, the per-subgroup audit
+%
+% Every frame was checked as a rendered page: nothing may run under the
+% footline, which a LaTeX compiler will not always tell you about.
+%=============================================================================
+\documentclass[aspectratio=169,11pt,xcolor={table}]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{array}
+
+% The deck reads the run figures where they already live.
+\graphicspath{{figures/}{../results/main/figures/}}
+
+%-- palette -------------------------------------------------------------------
+\definecolor{fairblue}{HTML}{3B5BA5}
+\definecolor{fairgreen}{HTML}{2F8F5B}
+\definecolor{fairwarn}{HTML}{C0562A}
+\definecolor{fairgrey}{HTML}{6B7280}
+\definecolor{fairink}{HTML}{222222}
+\definecolor{fairwash}{HTML}{F3F4F6}
+
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{normal text}{fg=fairink}
+\setbeamercolor{structure}{fg=fairblue}
+\setbeamercolor{frametitle}{fg=fairblue}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamercolor{framesubtitle}{fg=fairgrey}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{block title}{bg=fairblue!14,fg=fairblue}
+\setbeamercolor{block body}{bg=fairblue!5,fg=fairink}
+\setbeamercolor{block title alerted}{bg=fairwarn!14,fg=fairwarn}
+\setbeamercolor{block body alerted}{bg=fairwarn!5,fg=fairink}
+\setbeamercolor{block title example}{bg=fairgreen!14,fg=fairgreen}
+\setbeamercolor{block body example}{bg=fairgreen!5,fg=fairink}
+\setbeamertemplate{itemize item}{\color{fairblue}\rule[0.25ex]{0.7ex}{0.7ex}}
+\setbeamertemplate{itemize subitem}{\color{fairgrey}\rule[0.25ex]{0.5ex}{0.5ex}}
+
+\setbeamertemplate{frametitle}{%
+  \vspace{1.1ex}%
+  \begin{beamercolorbox}[wd=\textwidth]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle%
+    \ifx\insertframesubtitle\@empty\else
+      \\[0.2ex]{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+      \insertframesubtitle}%
+    \fi
+  \end{beamercolorbox}%
+  \vspace{0.3ex}%
+  {\color{fairblue!35}\rule{\textwidth}{0.6pt}}%
+  \vspace{-0.6ex}%
+}
+
+% Without \leavevmode this template typesets at \textwidth, reports an overfull
+% hbox on every frame, and pushes the body down until it runs under the footline.
+\newcommand{\thespeaker}{}
+\setbeamercolor{footline}{fg=fairgrey}
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.4ex,dp=1.4ex,leftskip=2.2ex,%
+    rightskip=2.2ex]{footline}%
+    \scriptsize\insertsection\hfill\thespeaker\hfill\insertframenumber%
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\newcommand{\repourl}{https://github.com/nigarrustamova/fairtox}
+\newcommand{\repotag}{v1.0-final}
+
+\newcommand{\takeaway}[1]{%
+  \vspace{0.6ex}%
+  \begin{beamercolorbox}[wd=\textwidth,sep=1.0ex,rounded=true]{block body example}%
+    \small\textbf{#1}%
+  \end{beamercolorbox}}
+
+% Every figure gets a width AND a height cap: the height is what keeps a caption
+% from being pushed under the footline, and the compiler does not warn when that
+% happens.
+\newcommand{\figfit}[3][0.88]{%
+  \begin{center}%
+    \includegraphics[width=#1\textwidth,height=#2\textheight,keepaspectratio]{#3}%
+  \end{center}}
+
+\newcommand{\head}[1]{{\color{fairblue}\textbf{#1}}}
+\newcommand{\hint}[1]{{\footnotesize\color{fairgrey}#1}}
+
+\title{Parity, Utility and Safety Are Not Independent}
+\date{DLE-AI-202 \quad Cohort I, 2026}
+
+\begin{document}
+
+%=============================================================================
+% 1 -- title (shared)
+%=============================================================================
+\section{FairTox}
+\begin{frame}[plain]
+  \vspace{3.5ex}
+  \begin{center}
+    {\Large\bfseries\color{fairblue} Parity, Utility and Safety Are Not
+      Independent\par}
+    \vspace{1.0ex}
+    {\normalsize A Controlled Comparison of Three Bias-Mitigation Families\par}
+    {\normalsize for Toxicity Classification\par}
+    \vspace{1.8ex}
+    {\color{fairblue!35}\rule{0.55\textwidth}{0.6pt}\par}
+    \vspace{2.0ex}
+    {\small Aliyev, Orkhan \qquad Mirzayeva, Laman \qquad Rustamova, Nigar
+      \qquad Samadov, Nijat\par}
+    \vspace{1.4ex}
+    {\small AI Academy \,·\, National Artificial Intelligence Centre \,·\,
+      Baku\par}
+    \vspace{0.5ex}
+    \hint{DLE-AI-202, Cohort I 2026 \,·\, Track 2: applied / domain research}
+    \vspace{2.4ex}
+
+    \hint{\texttt{\repourl} \,·\, tag \texttt{\repotag}}
+  \end{center}
+\end{frame}
+
+%=============================================================================
+% 2 -- roadmap (shared)
+%=============================================================================
+\begin{frame}{The talk in four parts}
+  \vspace{2.0ex}
+  \small
+  \begin{center}
+  \begin{tabular}{@{}c@{\hspace{2.4em}}l@{\hspace{3.2em}}l@{}}
+    \head{1} & The problem, and the corpus & Rustamova, Nigar \\[1.1ex]
+    \head{2} & How we measure, and what the errors are & Mirzayeva, Laman \\[1.1ex]
+    \head{3} & The model, and the obvious fix & Samadov, Nijat \\[1.1ex]
+    \head{4} & The mechanism, and what actually works & Aliyev, Orkhan \\
+  \end{tabular}
+  \end{center}
+
+  \vspace{2.6ex}
+  \begin{block}{The question}
+    One corpus, one architecture, one recipe: how do mitigations at the three
+    intervention points compare on parity --- and what does each cost in utility
+    and in safety?
+  \end{block}
+
+  \vspace{0.8ex}
+  \centerline{\hint{$38$ runs \,·\, $115$ models \,·\, $34.4$ GPU-hours \,·\,
+    every number here is generated from committed artefacts}}
+\end{frame}
+
+%=============================================================================
+% 3-6 -- Nigar
+%=============================================================================
+\renewcommand{\thespeaker}{Rustamova, Nigar}
+\section{1 · The problem and the corpus}
+
+\begin{frame}{Two errors --- and they land on different people}
+  \vspace{2.4ex}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \begin{alertblock}{False negative}
+        Abuse gets through.\\[0.5ex]
+        The person it targets is \textbf{unprotected}.
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \begin{block}{False positive}
+        A benign comment is removed.\\[0.5ex]
+        The person who wrote it is \textbf{silenced}.
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{3.0ex}
+  \centerline{\small Identity terms co-occur with abuse in scraped text --- so
+    the \emph{token} becomes cheap evidence.}
+
+  \takeaway{Then moderation is a tax on the communities it was deployed to
+    protect.}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{Three places to intervene --- rarely compared}
+  \vspace{2.0ex}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{0.30\textwidth}
+      \begin{block}{\textsc{pre} --- the data}
+        \small Rewrite the text so the term stops predicting the label.\\[0.6ex]
+        \hint{Dixon 2018 · Park 2018}
+      \end{block}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      \begin{block}{\textsc{in} --- the loss}
+        \small Change the objective: price the errors that matter.\\[0.6ex]
+        \hint{Zhang 2018 · Sagawa 2020}
+      \end{block}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      \begin{block}{\textsc{post} --- the threshold}
+        \small Leave the model; move the boundary per group.\\[0.6ex]
+        \hint{Hardt 2016}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{3.0ex}
+  \centerline{\small Each is normally evaluated \textbf{alone}, against its own
+    baseline, on its own metric.}
+
+  \takeaway{We run all three: five mitigations, three controls, eight seeds on
+    the headline pair.}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{The corpus: Jigsaw Unintended Bias}
+  \vspace{2.2ex}
+  \begin{center}
+    \small
+    \input{tables/s_corpus}
+  \end{center}
+  \vspace{2.2ex}
+  \small
+  \begin{itemize}
+    \item Target is the annotator \emph{fraction} --- binarised at $0.5$, audit
+      re-run at $\tau = 0.3 \ldots 0.7$.
+    \item Identity-annotated rows only: unrated $\neq$ identity-free. Licence
+      CC0 1.0.
+  \end{itemize}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{A baseline worth beating}
+  \vspace{2.4ex}
+  \begin{center}
+    \small
+    \input{tables/s_baselines}
+  \end{center}
+  \vspace{2.4ex}
+  \centerline{\small Balanced class weights on purpose --- unweighted logistic
+    regression reaches FNR $0.97$.}
+
+  \takeaway{Very different operating points: we quote both error rates, never
+    macro-F1 alone.}
+\end{frame}
+
+%=============================================================================
+% 7-10 -- Laman
+%=============================================================================
+\renewcommand{\thespeaker}{Mirzayeva, Laman}
+\section{2 · How we measure}
+
+\begin{frame}{Three axes --- never combined into one score}
+  \vspace{2.2ex}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{0.30\textwidth}
+      \begin{block}{Utility}
+        \small macro-F1, ROC-AUC, PR-AUC\\[0.6ex]
+        \hint{is it a good classifier?}
+      \end{block}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      \begin{block}{Parity}
+        \small FPR gap, macro FPR, EOD\\[0.6ex]
+        \hint{who is wrongly censored?}
+      \end{block}
+    \end{column}
+    \begin{column}{0.30\textwidth}
+      \begin{block}{Safety}
+        \small subgroup FNR\\[0.6ex]
+        \hint{whose abuse is missed?}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{3.0ex}
+  \centerline{$\mathrm{FPR}_k = \Pr(\hat p \geq \tau \mid y = 0,\, k)$
+    \qquad gap $= \max_k \mathrm{FPR}_k - \min_k \mathrm{FPR}_k$}
+
+  \takeaway{A single ``is it better?'' number would hide the trade-off we exist
+    to measure.}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{Five guards, all fixed before we saw a result}
+  \vspace{2.4ex}
+  \small
+  \begin{itemize}\itemsep 1.5ex
+    \item \head{Separate support floors} ($N \geq 100$ each) ---
+      \textbf{14 subgroups for parity, 9 for safety}.
+    \item \head{Wilson intervals} --- a bootstrap returns $[0,0]$ at zero false
+      positives, whatever the sample size.
+    \item \head{Collapse check} --- a model that flags nothing has
+      \textbf{perfect parity}. None of ours collapsed.
+    \item \head{One split per seed}, fingerprinted; duplicates measured:
+      $\leq 1.11\%$ of test rows, effect $\leq 0.0032$.
+    \item \head{Outcomes A / B / C / D pre-registered} in a config file before
+      any model was trained.
+  \end{itemize}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{What the model actually gets wrong}
+  \vspace{1.6ex}
+  \begin{center}
+    \small
+    \input{tables/s_coding}
+  \end{center}
+  \vspace{0.6ex}
+  \centerline{\hint{a uniform random sample of $60$ identity-bearing false
+    positives, read and coded by hand}}
+  \vspace{1.4ex}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{0.47\textwidth}
+      \begin{alertblock}{$45\%$ arguable}
+        \small a reasonable annotator could have called them toxic
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{block}{$38\%$ protected speech}
+        \small counter-speech, quotation, neutral mention
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{Two of the sixty}
+  \vspace{3.0ex}
+  \begin{block}{\normalsize ``He was mentally-ill.''}
+    \small model score $0.984$ \,·\, dataset label: non-toxic \,·\,
+    \textbf{neutral mention}
+  \end{block}
+
+  \vspace{2.0ex}
+  % The comment continues; the ellipsis says so rather than presenting the first
+  % sentence as the whole of it.
+  \begin{block}{\normalsize ``Yes, they condemn Islamic terrorists, who are no
+    different than Nazis and White Supremacists\,\ldots''}
+    \small model score $0.789$ \,·\, dataset label: non-toxic \,·\,
+    \textbf{counter-speech}
+  \end{block}
+
+  \takeaway{The worst error a moderation system can make: silencing the speech
+    the policy exists to protect.}
+\end{frame}
+
+%=============================================================================
+% 11-14 -- Nijat
+%=============================================================================
+\renewcommand{\thespeaker}{Samadov, Nijat}
+\section{3 · The model, and the obvious fix}
+
+\begin{frame}{The model}
+  \vspace{2.4ex}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \begin{block}{Architecture}
+        \small DistilBERT, pretrained\\
+        \texttt{[CLS]} $\rightarrow$ dropout $\rightarrow$
+        \texttt{Linear}$(768,1)$\\[0.6ex]
+        \hint{DistilRoBERTa for the backbone arm --- no code change}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Recipe}
+        \small AdamW · lr $3\times10^{-5}$ · batch $64$ · $3$ epochs\\
+        max length $128$ · mixed precision\\[0.6ex]
+        \hint{best-epoch selection, early stopping --- identical in both arms}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{2.6ex}
+  \takeaway{No \texttt{AutoModelForSequenceClassification}: it hides the loss,
+    and every intervention here lives in the loss.}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{115 models --- and how much of a difference is noise}
+  \vspace{2.4ex}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \begin{block}{The budget we used}
+        \small One MIG $3\text{g}.20\text{gb}$ slice of an A100\\
+        $0.064$--$0.071$ s/step · peak $3.99$ GB · $34.4$ GPU-h\\[0.6ex]
+        \hint{spare memory went to more seeds, not a bigger batch}
+      \end{block}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{block}{The noise floor}
+        \small The same baseline trained \textbf{five} times\\
+        lands in \textbf{two} states, not five\\[0.6ex]
+        \hint{$46$ of $67{,}200$ test decisions differ --- $0.068\%$}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{2.6ex}
+  \takeaway{Floor $0.0000$ on the FPR gap and $0.0017$ on the worst-moving
+    metric --- about $78\times$ smaller than the effect we report.}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{The obvious fix: swap the identity term}
+  \vspace{3.0ex}
+  \begin{center}
+    \normalsize
+    \emph{``I am a proud \textbf{Muslim} woman''} $\;\longrightarrow\;$
+    \emph{``I am a proud \textbf{Christian} woman''}
+  \end{center}
+  \vspace{3.0ex}
+  \small
+  \begin{itemize}\itemsep 1.4ex
+    \item Swapped \textbf{in place}, never appended --- otherwise the step count
+      changes too.
+    \item Two doses: $p = 0.5$ and $p = 1.0$, five seeds each.
+    \item Assumes toxicity is invariant under the swap --- true for abuse, false
+      for facts.
+  \end{itemize}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{It does not work --- and the way it fails is the result}
+  \figfit[0.84]{0.505}{s_dose}
+  \vspace{-0.6ex}
+  \centerline{\hint{five seeds per dose; the slope is the shortcut regression of
+    the next section}}
+  \takeaway{At full dose the shortcut flattens $30.9\%$ and the gap still does
+    not close: the token was never the whole cause.}
+\end{frame}
+
+%=============================================================================
+% 15-19 -- Orkhan
+%=============================================================================
+\renewcommand{\thespeaker}{Aliyev, Orkhan}
+\section{4 · The mechanism, and what works}
+
+% The figure carries its own title, so the frame title must not repeat it.
+\begin{frame}{So where does the gap come from?}
+  \vspace{1.0ex}
+  \begin{columns}[c,onlytextwidth]
+    \begin{column}{0.58\textwidth}
+      \includegraphics[width=\linewidth,height=0.70\textheight,keepaspectratio]%
+        {fig10_mechanism}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      \small
+      A subgroup's \textbf{toxic rate} predicts the model's \textbf{FPR} on that
+      subgroup almost perfectly.\\[1.4ex]
+      $r = 0.885$--$0.925$ in \emph{every} configuration we ran.\\[1.4ex]
+      \begin{beamercolorbox}[wd=\linewidth,sep=1.0ex,rounded=true]%
+        {block body example}%
+        \small\textbf{Not prejudice --- a conditional probability learned from
+        the corpus and applied as a prior.}%
+      \end{beamercolorbox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{The fix: one \emph{asymmetric} weight}
+  \vspace{2.6ex}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{0.48\textwidth}
+      \centering
+      \small
+      \renewcommand{\arraystretch}{1.6}
+      \begin{tabular}{l|c|c}
+        \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{non-toxic}}
+          & \multicolumn{1}{c}{\textbf{toxic}} \\ \cline{2-3}
+        \textbf{background} & \cellcolor{fairwash}$1$ & \cellcolor{fairwash}$1$ \\ \cline{2-3}
+        \textbf{identity-bearing} & \cellcolor{fairgreen!30}$\boldsymbol{\alpha}$
+          & \cellcolor{fairwash}$1$ \\ \cline{2-3}
+      \end{tabular}
+
+      \vspace{2.2ex}
+      $\displaystyle \mathcal{L} = \frac{\sum_i w_i \ell_i}{\sum_i w_i}$
+      \qquad $\alpha = 4$
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \vspace{-1.4ex}
+      \small
+      \begin{itemize}\itemsep 1.3ex
+        \item One \textsc{train} function; the arms differ in \textbf{one
+          argument}.
+        \item Split and training fingerprints must match --- otherwise the
+          comparison is \textbf{refused}.
+        \item $\alpha$ fixed in advance, swept in the ablation.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{The headline, over eight seeds}
+  \vspace{1.8ex}
+  \begin{center}
+    \small
+    \setlength{\tabcolsep}{3pt}
+    \input{tables/s_headline}
+  \end{center}
+  \vspace{1.8ex}
+  \small
+  \begin{itemize}\itemsep 1.0ex
+    \item $8/8$ seeds agree in sign · sign test $p = 0.0078$ · pre-registered
+      outcome \textbf{C}.
+    \item The shortcut slope flattens $44.6\%$ --- and the fit stays just as
+      tight.
+    \item Threshold-free metrics agree: BPSN $+0.0114$, BNSP $-0.0169$.
+  \end{itemize}
+  \takeaway{The price: $2.19$ points of missed abuse per point of FPR gap
+    closed.}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{The three intervention points differ in \emph{sign}}
+  \figfit[0.86]{0.66}{s_families}
+  \vspace{-0.4ex}
+  \centerline{\hint{filled marker = the paired $95\%$ interval excludes zero;
+    three-seed families carry a direction only}}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{Three controls, one conclusion}
+  \vspace{1.0ex}
+  \begin{center}
+    \footnotesize
+    \input{tables/s_controls}
+  \end{center}
+  \vspace{1.2ex}
+  \begin{columns}[t,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      \centering
+      \footnotesize
+      \setlength{\tabcolsep}{4pt}
+      \input{tables/s_dro}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \vspace{-0.6ex}
+      \begin{alertblock}{The claim}
+        \small The gain needs an \textbf{asymmetric} weight on the identity
+        \emph{non-toxic} cell alone. Raise the \emph{toxic} cell too --- by hand
+        or learned --- and the frontier runs backwards.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+%=============================================================================
+% 20-21 -- shared close
+%=============================================================================
+\renewcommand{\thespeaker}{}
+\section{Limitations and conclusion}
+
+\begin{frame}{What we cannot claim}
+  \vspace{2.0ex}
+  \small
+  \begin{itemize}\itemsep 1.4ex
+    \item Absolute parity improved; \texttt{white}/\texttt{christian} relative
+      parity did \textbf{not} ($3.32\times \rightarrow 3.83\times$).
+    \item One subgroup got worse: \texttt{atheist} $+50\%$ from a small base.
+    \item $45\%$ of the coded false positives are \textbf{annotator
+      disagreement} --- $n = 60$, one coder.
+    \item Support is uneven: $14$ of $24$ subgroups for parity, $9$ for safety.
+    \item Only two of eight configurations reach eight seeds.
+    \item One corpus, one language, coarse binary identity categories.
+  \end{itemize}
+\end{frame}
+
+%=============================================================================
+\begin{frame}{Conclusion}
+  \vspace{2.0ex}
+  \small
+  \begin{itemize}\itemsep 1.5ex
+    \item The disparity is a \textbf{property of the training distribution}, not
+      a bug in one model.
+    \item It can be reduced --- $-0.0520$ over eight seeds --- but never for
+      free: $2.19$ points of missed abuse per point.
+    \item The three families differ in \textbf{sign}, not merely in strength.
+    \item Three controls say why: the gain needs an \emph{asymmetric} weight, so
+      even a learned worst-group objective cannot find it.
+  \end{itemize}
+
+  \vspace{2.2ex}
+  \begin{beamercolorbox}[wd=\textwidth,sep=1.1ex,rounded=true]%
+    {block body example}%
+    \centering\small\textbf{Thank you --- questions?}\\[0.3ex]
+    \hint{\texttt{\repourl} \,·\, tag \texttt{\repotag}}%
+  \end{beamercolorbox}
+\end{frame}
+
+%=============================================================================
+% 22-23 -- backup
+%=============================================================================
+\appendix
+\section{Backup}
+\renewcommand{\thespeaker}{backup}
+
+\begin{frame}{How strong should the weighting be?}
+  \figfit[0.78]{0.60}{s_alpha}
+  \vspace{-0.4ex}
+  \centerline{\hint{three seeds; parity flattens after the pre-registered
+    $\alpha = 4$ while the safety cost keeps climbing}}
+\end{frame}
+
+\begin{frame}{Who the intervention moves}
+  \figfit[0.88]{0.66}{fig05_fpr_by_subgroup}
+  \vspace{-0.4ex}
+  \centerline{\hint{$12$ of the $14$ improve; \texttt{asian} is unchanged and
+    \texttt{atheist} --- the smallest group --- gets worse}}
+\end{frame}
+
+\end{document}
